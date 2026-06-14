@@ -59,6 +59,15 @@ uv run python -m pmz.eval.visualize    # docs/assets/self_improvement.svg を書
   （入力ハッシュ / 判定 / 確信度 / 根拠 / 発火ルール / モデル・プロンプト版 / 寄与エージェント・§7 #4 / §5.2）。
   途中1件でも改変すると `AuditLog.verify()` が検知する（Firestore 永続化は Phase2）。
 
+### W4: 永続化抽象層＋IaC 雛形（§4.2 / §5）
+
+- `src/pmz/store/` — 永続化と検索を **ポート（Protocol）で抽象化**。判定・学習ロジックを変えずに
+  実装（アダプタ）を差し替えられる。MVP は in-memory（`AuditLog` / `CaseMemory` / `InMemoryVerdictStore`）、
+  Phase2 で **Firestore**（判定ログ・監査証跡）／**Elasticsearch・Vertex AI Vector Search**
+  （Few-shot 類似検索 = `CaseRetriever`）を注入。設計判断は [`docs/adr/0001-retrieval-backend.md`](docs/adr/0001-retrieval-backend.md)。
+- `infra/terraform/` — Cloud Run / Firestore / Artifact Registry / Vertex AI を定義する IaC 雛形
+  （`apply` はしない設計用スケルトン・§5）。
+
 ## grill-me — 要件ヒアリングスキル
 
 オープンソースの [`grill-me`](https://github.com/mattpocock/skills) の思想をベースに、
