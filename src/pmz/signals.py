@@ -113,12 +113,12 @@ def build_signals(
     起こす（LLMなしのルール版は機械的に証拠を引けないため棄権する＝安全側・§3.2.1）。
     """
     if assessment is None:
-        assessment = _draft_unverifiable_assessment(record.requirement)
+        assessment = draft_unverifiable_assessment(record.requirement)
     return GateSignals(code=record.code, ci=record.ci, requirement=assessment)
 
 
-def _draft_unverifiable_assessment(req: RequirementSignal) -> RequirementAssessment:
-    """申告基準を全件「検証不能・確信度0」で起こす（LLMなしの保守的既定）。"""
+def draft_unverifiable_assessment(req: RequirementSignal) -> RequirementAssessment:
+    """申告基準を全件「検証不能・確信度0」で起こす（LLMなしの保守的既定・§3.2.1 棄権）。"""
     return RequirementAssessment(
         results=[CriterionResult(criterion=c) for c in req.acceptance_criteria]
     )
