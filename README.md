@@ -2,7 +2,7 @@
 DevOps × AI Agent Hackathon 2026: AI エージェントを「つくる、まわす、とどける」夏
 
 提出作品 **GateKeeper（仮称）** — AIリリース判定ゲートキーパー × 自己改善エージェント。
-要件定義は [`docs/requirements.md`](docs/requirements.md)。
+要件定義は [`docs/requirements.md`](docs/requirements.md)、W1技術設計は [`docs/w1-technical-design.md`](docs/w1-technical-design.md)。
 
 ## AI駆動開発ハーネス
 
