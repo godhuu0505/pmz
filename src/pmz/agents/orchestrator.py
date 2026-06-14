@@ -9,6 +9,8 @@
 
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
+
 from pydantic import BaseModel, ConfigDict
 
 from pmz.agents.base import AgentRole
@@ -17,10 +19,12 @@ from pmz.agents.pm_req import PMReqAgent
 from pmz.audit import AuditLog, AuditRecord
 from pmz.core.decision import GateDecision
 from pmz.core.judge import CONFIDENCE_THRESHOLD, judge
-from pmz.learning.memory import CaseMemory
 from pmz.learning.rulebook import Rulebook
 from pmz.models import ReleaseRecord
 from pmz.signals import GateSignals, RequirementAssessment
+
+if TYPE_CHECKING:
+    from pmz.store.ports import CaseRetriever
 
 
 class GateResult(BaseModel):
@@ -54,7 +58,7 @@ class Orchestrator:
         *,
         assessment: RequirementAssessment | None = None,
         rulebook: Rulebook | None = None,
-        memory: CaseMemory | None = None,
+        memory: CaseRetriever | None = None,
         audit_log: AuditLog | None = None,
         threshold: float = CONFIDENCE_THRESHOLD,
     ) -> GateResult:

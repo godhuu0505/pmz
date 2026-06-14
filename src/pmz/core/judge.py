@@ -17,12 +17,18 @@ W1 死守ラインの土台。**まず LLM なしの決定論ルールでグリ�
 
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
+
 from pmz.core.decision import AutonomyLevel, GateDecision
 from pmz.core.hard_guard import hard_guarded_flags
-from pmz.learning.memory import CaseMemory
 from pmz.learning.rulebook import RuleAction, Rulebook
 from pmz.models import ReleaseRecord, Verdict
 from pmz.signals import GateSignals, RequirementAssessment, build_signals
+
+if TYPE_CHECKING:
+    # Few-shot 検索はポート（Protocol）にのみ依存する。in-memory / Elasticsearch /
+    # Vertex AI Vector Search のいずれの実装も注入できる（§4.2 / store/ports.py）。
+    from pmz.store.ports import CaseRetriever
 
 # 自律承認に要する確信度の下限 T（§7 #5）。自己改善ループ(C)の評価で継続調整する対象（§3.4）。
 CONFIDENCE_THRESHOLD = 0.8
@@ -35,7 +41,7 @@ def judge(
     *,
     threshold: float = CONFIDENCE_THRESHOLD,
     rulebook: Rulebook | None = None,
-    memory: CaseMemory | None = None,
+    memory: CaseRetriever | None = None,
 ) -> GateDecision:
     """客観シグナルから条件付き自律の判定を下す（決定論・§3.4 / §7 #5）。
 
@@ -156,7 +162,7 @@ def judge_record(
     *,
     threshold: float = CONFIDENCE_THRESHOLD,
     rulebook: Rulebook | None = None,
-    memory: CaseMemory | None = None,
+    memory: CaseRetriever | None = None,
 ) -> GateDecision:
     """``ReleaseRecord`` を判定する薄いラッパ（合成データのバックテスト用）。
 
