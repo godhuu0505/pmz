@@ -1,0 +1,1144 @@
+[
+  {
+    "id": "rel-01",
+    "pr_number": 100,
+    "commit_sha": "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2",
+    "timestamp": "2026-05-01T09:00:00Z",
+    "author": "alice_dev",
+    "code": {
+      "diff_summary": "Add user profile endpoint with avatar upload support",
+      "changed_files": ["src/api/users.py", "src/api/schemas.py", "tests/test_users.py"],
+      "risk_flags": [],
+      "lines_changed": 120
+    },
+    "ci": {
+      "tests_pass": true,
+      "coverage": 0.87,
+      "lint_pass": true,
+      "build_pass": true,
+      "security_scan_pass": true
+    },
+    "requirement": {
+      "requirement_ids": ["REQ-USER-PROFILE"],
+      "acceptance_criteria": [
+        "ユーザーがアバター画像をアップロードできる",
+        "プロフィール情報が正しく保存・取得される"
+      ],
+      "release_note": "ユーザープロフィール編集機能を追加。アバター画像アップロードに対応。"
+    },
+    "post_events": [],
+    "labels": {
+      "incident_axis": {
+        "value": "ok",
+        "window": "24h",
+        "confirmed_at": "2026-05-02T09:00:00Z"
+      },
+      "requirement_axis": {
+        "value": "met",
+        "status": "final",
+        "finalized_at": "2026-05-31T09:00:00Z"
+      },
+      "correct_verdict": "Go"
+    },
+    "arc": {
+      "archetype": null,
+      "act": null,
+      "recurrence_group_id": null
+    }
+  },
+  {
+    "id": "rel-02",
+    "pr_number": 101,
+    "commit_sha": "b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3",
+    "timestamp": "2026-05-02T11:30:00Z",
+    "author": "bob_eng",
+    "code": {
+      "diff_summary": "Implement search autocomplete for product catalog",
+      "changed_files": ["src/api/search.py", "src/core/indexer.py", "tests/test_search.py"],
+      "risk_flags": [],
+      "lines_changed": 85
+    },
+    "ci": {
+      "tests_pass": true,
+      "coverage": 0.82,
+      "lint_pass": true,
+      "build_pass": true,
+      "security_scan_pass": true
+    },
+    "requirement": {
+      "requirement_ids": ["REQ-SEARCH-AUTOCOMPLETE"],
+      "acceptance_criteria": [
+        "検索ボックスに入力するとサジェストが表示される",
+        "サジェストは最大10件まで表示される"
+      ],
+      "release_note": "商品カタログの検索オートコンプリート機能を追加。"
+    },
+    "post_events": [],
+    "labels": {
+      "incident_axis": {
+        "value": "ok",
+        "window": "24h",
+        "confirmed_at": "2026-05-03T11:30:00Z"
+      },
+      "requirement_axis": {
+        "value": "met",
+        "status": "final",
+        "finalized_at": "2026-06-01T11:30:00Z"
+      },
+      "correct_verdict": "Go"
+    },
+    "arc": {
+      "archetype": null,
+      "act": null,
+      "recurrence_group_id": null
+    }
+  },
+  {
+    "id": "rel-03",
+    "pr_number": 102,
+    "commit_sha": "c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4",
+    "timestamp": "2026-05-04T10:00:00Z",
+    "author": "carol_ui",
+    "code": {
+      "diff_summary": "Redesign dashboard header and navigation menu",
+      "changed_files": ["src/ui/header.py", "src/ui/nav.py", "src/ui/styles.css"],
+      "risk_flags": [],
+      "lines_changed": 200
+    },
+    "ci": {
+      "tests_pass": true,
+      "coverage": 0.79,
+      "lint_pass": true,
+      "build_pass": true,
+      "security_scan_pass": true
+    },
+    "requirement": {
+      "requirement_ids": ["REQ-UI-NAVIGATION"],
+      "acceptance_criteria": [
+        "ダッシュボードヘッダーにユーザー名とアバターが表示される",
+        "ナビゲーションメニューがモバイル表示に対応している"
+      ],
+      "release_note": "ダッシュボードのヘッダーとナビゲーションを刷新。モバイル対応を改善。"
+    },
+    "post_events": [],
+    "labels": {
+      "incident_axis": {
+        "value": "ok",
+        "window": "24h",
+        "confirmed_at": "2026-05-05T10:00:00Z"
+      },
+      "requirement_axis": {
+        "value": "met",
+        "status": "final",
+        "finalized_at": "2026-06-03T10:00:00Z"
+      },
+      "correct_verdict": "Go"
+    },
+    "arc": {
+      "archetype": null,
+      "act": null,
+      "recurrence_group_id": null
+    }
+  },
+  {
+    "id": "rel-04",
+    "pr_number": 103,
+    "commit_sha": "d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5",
+    "timestamp": "2026-05-06T14:00:00Z",
+    "author": "dave_core",
+    "code": {
+      "diff_summary": "Add rate limiting middleware to API endpoints",
+      "changed_files": ["src/core/middleware.py", "src/core/ratelimit.py", "tests/test_middleware.py"],
+      "risk_flags": [],
+      "lines_changed": 95
+    },
+    "ci": {
+      "tests_pass": true,
+      "coverage": 0.91,
+      "lint_pass": true,
+      "build_pass": true,
+      "security_scan_pass": true
+    },
+    "requirement": {
+      "requirement_ids": ["REQ-API-RATELIMIT"],
+      "acceptance_criteria": [
+        "IPアドレス単位で1分間に100リクエストまでに制限される",
+        "制限超過時に429ステータスコードが返却される"
+      ],
+      "release_note": "APIレートリミットミドルウェアを追加。IPアドレス単位で分間100req制限。"
+    },
+    "post_events": [],
+    "labels": {
+      "incident_axis": {
+        "value": "ok",
+        "window": "24h",
+        "confirmed_at": "2026-05-07T14:00:00Z"
+      },
+      "requirement_axis": {
+        "value": "met",
+        "status": "final",
+        "finalized_at": "2026-06-05T14:00:00Z"
+      },
+      "correct_verdict": "Go"
+    },
+    "arc": {
+      "archetype": null,
+      "act": null,
+      "recurrence_group_id": null
+    }
+  },
+  {
+    "id": "rel-05",
+    "pr_number": 104,
+    "commit_sha": "e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6",
+    "timestamp": "2026-05-08T09:30:00Z",
+    "author": "eve_api",
+    "code": {
+      "diff_summary": "Implement email notification for order status changes",
+      "changed_files": ["src/api/notifications.py", "src/core/mailer.py", "tests/test_notifications.py"],
+      "risk_flags": [],
+      "lines_changed": 140
+    },
+    "ci": {
+      "tests_pass": true,
+      "coverage": 0.85,
+      "lint_pass": true,
+      "build_pass": true,
+      "security_scan_pass": true
+    },
+    "requirement": {
+      "requirement_ids": ["REQ-NOTIFY-ORDER"],
+      "acceptance_criteria": [
+        "注文ステータス変更時にユーザーへメールが送信される",
+        "メールにはトラッキングURLが含まれる"
+      ],
+      "release_note": "注文ステータス変更メール通知機能を実装。トラッキングURL付きで送信。"
+    },
+    "post_events": [],
+    "labels": {
+      "incident_axis": {
+        "value": "ok",
+        "window": "24h",
+        "confirmed_at": "2026-05-09T09:30:00Z"
+      },
+      "requirement_axis": {
+        "value": "met",
+        "status": "final",
+        "finalized_at": "2026-06-07T09:30:00Z"
+      },
+      "correct_verdict": "Go"
+    },
+    "arc": {
+      "archetype": null,
+      "act": null,
+      "recurrence_group_id": null
+    }
+  },
+  {
+    "id": "rel-06",
+    "pr_number": 105,
+    "commit_sha": "f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1",
+    "timestamp": "2026-05-10T13:00:00Z",
+    "author": "frank_dev",
+    "code": {
+      "diff_summary": "Add CSV export feature for order history",
+      "changed_files": ["src/api/exports.py", "src/core/csv_builder.py", "tests/test_exports.py"],
+      "risk_flags": [],
+      "lines_changed": 110
+    },
+    "ci": {
+      "tests_pass": true,
+      "coverage": 0.88,
+      "lint_pass": true,
+      "build_pass": true,
+      "security_scan_pass": true
+    },
+    "requirement": {
+      "requirement_ids": ["REQ-EXPORT-ORDERS"],
+      "acceptance_criteria": [
+        "注文履歴をCSV形式でダウンロードできる",
+        "CSVには注文ID・日時・金額・ステータスが含まれる"
+      ],
+      "release_note": "注文履歴のCSVエクスポート機能を追加。注文ID/日時/金額/ステータスを含む。"
+    },
+    "post_events": [],
+    "labels": {
+      "incident_axis": {
+        "value": "ok",
+        "window": "24h",
+        "confirmed_at": "2026-05-11T13:00:00Z"
+      },
+      "requirement_axis": {
+        "value": "met",
+        "status": "final",
+        "finalized_at": "2026-06-09T13:00:00Z"
+      },
+      "correct_verdict": "Go"
+    },
+    "arc": {
+      "archetype": null,
+      "act": null,
+      "recurrence_group_id": null
+    }
+  },
+  {
+    "id": "rel-07",
+    "pr_number": 106,
+    "commit_sha": "a7b8c9d0e1f2a7b8c9d0e1f2a7b8c9d0e1f2a7b8",
+    "timestamp": "2026-05-12T10:00:00Z",
+    "author": "grace_db",
+    "code": {
+      "diff_summary": "Add index on orders.user_id to improve query performance",
+      "changed_files": ["db/migrations/0042_add_index.sql", "src/orders/repo.py"],
+      "risk_flags": [],
+      "lines_changed": 30
+    },
+    "ci": {
+      "tests_pass": true,
+      "coverage": 0.83,
+      "lint_pass": true,
+      "build_pass": true,
+      "security_scan_pass": true
+    },
+    "requirement": {
+      "requirement_ids": ["REQ-PERF-ORDERS"],
+      "acceptance_criteria": [
+        "注文一覧取得のレスポンスタイムが200ms以内になる",
+        "インデックス追加によるストレージ増加が許容範囲内である"
+      ],
+      "release_note": "orders.user_idにインデックスを追加。クエリ性能を改善。"
+    },
+    "post_events": [
+      {
+        "type": "incident",
+        "timestamp": "2026-05-12T16:00:00Z",
+        "linked_sha": "a7b8c9d0e1f2a7b8c9d0e1f2a7b8c9d0e1f2a7b8",
+        "touched_files": ["db/migrations/0042_add_index.sql"]
+      }
+    ],
+    "labels": {
+      "incident_axis": {
+        "value": "fail",
+        "window": "24h",
+        "confirmed_at": "2026-05-13T10:00:00Z"
+      },
+      "requirement_axis": {
+        "value": "met",
+        "status": "final",
+        "finalized_at": "2026-06-11T10:00:00Z"
+      },
+      "correct_verdict": "No-Go"
+    },
+    "arc": {
+      "archetype": "db_migration",
+      "act": "1_trap",
+      "recurrence_group_id": "grp-db-mig"
+    }
+  },
+  {
+    "id": "rel-08",
+    "pr_number": 107,
+    "commit_sha": "b8c9d0e1f2a3b8c9d0e1f2a3b8c9d0e1f2a3b8c9",
+    "timestamp": "2026-05-14T10:00:00Z",
+    "author": "henry_ui",
+    "code": {
+      "diff_summary": "Add dark mode toggle to user settings",
+      "changed_files": ["src/ui/settings.py", "src/ui/theme.py", "tests/test_settings.py"],
+      "risk_flags": [],
+      "lines_changed": 75
+    },
+    "ci": {
+      "tests_pass": true,
+      "coverage": 0.84,
+      "lint_pass": true,
+      "build_pass": true,
+      "security_scan_pass": true
+    },
+    "requirement": {
+      "requirement_ids": ["REQ-UI-DARKMODE"],
+      "acceptance_criteria": [
+        "ユーザー設定画面にダークモード切替スイッチが表示される",
+        "設定が次回ログイン時も保持される"
+      ],
+      "release_note": "ダークモード切替機能をユーザー設定に追加。設定は永続化される。"
+    },
+    "post_events": [],
+    "labels": {
+      "incident_axis": {
+        "value": "ok",
+        "window": "24h",
+        "confirmed_at": "2026-05-15T10:00:00Z"
+      },
+      "requirement_axis": {
+        "value": "met",
+        "status": "final",
+        "finalized_at": "2026-06-13T10:00:00Z"
+      },
+      "correct_verdict": "Go"
+    },
+    "arc": {
+      "archetype": null,
+      "act": null,
+      "recurrence_group_id": null
+    }
+  },
+  {
+    "id": "rel-09",
+    "pr_number": 108,
+    "commit_sha": "c9d0e1f2a3b4c9d0e1f2a3b4c9d0e1f2a3b4c9d0",
+    "timestamp": "2026-05-15T14:30:00Z",
+    "author": "iris_api",
+    "code": {
+      "diff_summary": "Implement pagination for product listing API",
+      "changed_files": ["src/api/products.py", "src/core/pagination.py", "tests/test_products.py"],
+      "risk_flags": [],
+      "lines_changed": 65
+    },
+    "ci": {
+      "tests_pass": true,
+      "coverage": 0.89,
+      "lint_pass": true,
+      "build_pass": true,
+      "security_scan_pass": true
+    },
+    "requirement": {
+      "requirement_ids": ["REQ-API-PAGINATION"],
+      "acceptance_criteria": [
+        "商品一覧APIがページネーションパラメータを受け付ける",
+        "デフォルトページサイズは20件"
+      ],
+      "release_note": "商品一覧APIにページネーションを実装。デフォルト20件/ページ。"
+    },
+    "post_events": [],
+    "labels": {
+      "incident_axis": {
+        "value": "ok",
+        "window": "24h",
+        "confirmed_at": "2026-05-16T14:30:00Z"
+      },
+      "requirement_axis": {
+        "value": "met",
+        "status": "final",
+        "finalized_at": "2026-06-14T14:30:00Z"
+      },
+      "correct_verdict": "Go"
+    },
+    "arc": {
+      "archetype": null,
+      "act": null,
+      "recurrence_group_id": null
+    }
+  },
+  {
+    "id": "rel-10",
+    "pr_number": 109,
+    "commit_sha": "d0e1f2a3b4c5d0e1f2a3b4c5d0e1f2a3b4c5d0e1",
+    "timestamp": "2026-05-17T09:00:00Z",
+    "author": "jack_core",
+    "code": {
+      "diff_summary": "Add request tracing with correlation IDs",
+      "changed_files": ["src/core/tracing.py", "src/core/middleware.py", "tests/test_tracing.py"],
+      "risk_flags": [],
+      "lines_changed": 90
+    },
+    "ci": {
+      "tests_pass": true,
+      "coverage": 0.86,
+      "lint_pass": true,
+      "build_pass": true,
+      "security_scan_pass": true
+    },
+    "requirement": {
+      "requirement_ids": ["REQ-OPS-TRACING"],
+      "acceptance_criteria": [
+        "全リクエストに相関IDが付与される",
+        "相関IDがレスポンスヘッダに含まれる"
+      ],
+      "release_note": "リクエストトレーシングを実装。全リクエストに相関IDを付与。"
+    },
+    "post_events": [],
+    "labels": {
+      "incident_axis": {
+        "value": "ok",
+        "window": "24h",
+        "confirmed_at": "2026-05-18T09:00:00Z"
+      },
+      "requirement_axis": {
+        "value": "met",
+        "status": "final",
+        "finalized_at": "2026-06-16T09:00:00Z"
+      },
+      "correct_verdict": "Go"
+    },
+    "arc": {
+      "archetype": null,
+      "act": null,
+      "recurrence_group_id": null
+    }
+  },
+  {
+    "id": "rel-11",
+    "pr_number": 110,
+    "commit_sha": "e1f2a3b4c5d6e1f2a3b4c5d6e1f2a3b4c5d6e1f2",
+    "timestamp": "2026-05-19T11:00:00Z",
+    "author": "karen_dev",
+    "code": {
+      "diff_summary": "Improve error messages for validation failures",
+      "changed_files": ["src/api/validators.py", "src/core/errors.py", "tests/test_validators.py"],
+      "risk_flags": [],
+      "lines_changed": 55
+    },
+    "ci": {
+      "tests_pass": true,
+      "coverage": 0.92,
+      "lint_pass": true,
+      "build_pass": true,
+      "security_scan_pass": true
+    },
+    "requirement": {
+      "requirement_ids": ["REQ-API-ERRORS"],
+      "acceptance_criteria": [
+        "バリデーションエラー時にフィールド名と理由が返却される",
+        "エラーメッセージが日本語で表示される"
+      ],
+      "release_note": "バリデーションエラーメッセージを改善。フィールド名と理由を日本語で返却。"
+    },
+    "post_events": [],
+    "labels": {
+      "incident_axis": {
+        "value": "ok",
+        "window": "24h",
+        "confirmed_at": "2026-05-20T11:00:00Z"
+      },
+      "requirement_axis": {
+        "value": "met",
+        "status": "final",
+        "finalized_at": "2026-06-18T11:00:00Z"
+      },
+      "correct_verdict": "Go"
+    },
+    "arc": {
+      "archetype": null,
+      "act": null,
+      "recurrence_group_id": null
+    }
+  },
+  {
+    "id": "rel-12",
+    "pr_number": 111,
+    "commit_sha": "f2a3b4c5d6e7f2a3b4c5d6e7f2a3b4c5d6e7f2a3",
+    "timestamp": "2026-05-21T10:00:00Z",
+    "author": "liam_billing",
+    "code": {
+      "diff_summary": "Update invoice generation logic for tax line items",
+      "changed_files": ["src/billing/invoice.py"],
+      "risk_flags": [],
+      "lines_changed": 180
+    },
+    "ci": {
+      "tests_pass": true,
+      "coverage": 0.78,
+      "lint_pass": true,
+      "build_pass": true,
+      "security_scan_pass": true
+    },
+    "requirement": {
+      "requirement_ids": ["REQ-BILL-INVOICE"],
+      "acceptance_criteria": [
+        "請求書PDFに税額内訳を表示する",
+        "締日をまたぐ請求を正しく按分する"
+      ],
+      "release_note": "請求書生成ロジックを更新。税額内訳の表示に対応。"
+    },
+    "post_events": [
+      {
+        "type": "requirement_miss_bug",
+        "timestamp": "2026-05-31T10:00:00Z",
+        "linked_sha": "f2a3b4c5d6e7f2a3b4c5d6e7f2a3b4c5d6e7f2a3",
+        "touched_files": ["src/billing/invoice.py"]
+      }
+    ],
+    "labels": {
+      "incident_axis": {
+        "value": "ok",
+        "window": "24h",
+        "confirmed_at": "2026-05-22T10:00:00Z"
+      },
+      "requirement_axis": {
+        "value": "unmet",
+        "status": "final",
+        "finalized_at": "2026-05-31T10:00:00Z"
+      },
+      "correct_verdict": "No-Go"
+    },
+    "arc": {
+      "archetype": "requirement_miss",
+      "act": "1_trap",
+      "recurrence_group_id": "grp-req-billing"
+    }
+  },
+  {
+    "id": "rel-13",
+    "pr_number": 112,
+    "commit_sha": "a3b4c5d6e7f8a3b4c5d6e7f8a3b4c5d6e7f8a3b4",
+    "timestamp": "2026-05-23T09:00:00Z",
+    "author": "mia_api",
+    "code": {
+      "diff_summary": "Add GraphQL endpoint for product queries",
+      "changed_files": ["src/api/graphql.py", "src/api/resolvers.py", "tests/test_graphql.py"],
+      "risk_flags": [],
+      "lines_changed": 210
+    },
+    "ci": {
+      "tests_pass": true,
+      "coverage": 0.81,
+      "lint_pass": true,
+      "build_pass": true,
+      "security_scan_pass": true
+    },
+    "requirement": {
+      "requirement_ids": ["REQ-API-GRAPHQL"],
+      "acceptance_criteria": [
+        "商品クエリがGraphQLエンドポイント経由で取得できる",
+        "N+1クエリが発生しない"
+      ],
+      "release_note": "商品クエリ用GraphQLエンドポイントを追加。DataLoaderによりN+1を解消。"
+    },
+    "post_events": [],
+    "labels": {
+      "incident_axis": {
+        "value": "ok",
+        "window": "24h",
+        "confirmed_at": "2026-05-24T09:00:00Z"
+      },
+      "requirement_axis": {
+        "value": "met",
+        "status": "final",
+        "finalized_at": "2026-06-22T09:00:00Z"
+      },
+      "correct_verdict": "Go"
+    },
+    "arc": {
+      "archetype": null,
+      "act": null,
+      "recurrence_group_id": null
+    }
+  },
+  {
+    "id": "rel-14",
+    "pr_number": 113,
+    "commit_sha": "b4c5d6e7f8a9b4c5d6e7f8a9b4c5d6e7f8a9b4c5",
+    "timestamp": "2026-05-24T13:00:00Z",
+    "author": "noah_core",
+    "code": {
+      "diff_summary": "Refactor session management to use Redis",
+      "changed_files": ["src/core/session.py", "src/core/redis_client.py", "tests/test_session.py"],
+      "risk_flags": [],
+      "lines_changed": 155
+    },
+    "ci": {
+      "tests_pass": true,
+      "coverage": 0.83,
+      "lint_pass": true,
+      "build_pass": true,
+      "security_scan_pass": true
+    },
+    "requirement": {
+      "requirement_ids": ["REQ-SESSION-REDIS"],
+      "acceptance_criteria": [
+        "セッションデータがRedisに保存される",
+        "セッション有効期限が設定可能である"
+      ],
+      "release_note": "セッション管理をRedisベースに移行。有効期限を設定可能にした。"
+    },
+    "post_events": [],
+    "labels": {
+      "incident_axis": {
+        "value": "ok",
+        "window": "24h",
+        "confirmed_at": "2026-05-25T13:00:00Z"
+      },
+      "requirement_axis": {
+        "value": "met",
+        "status": "final",
+        "finalized_at": "2026-06-23T13:00:00Z"
+      },
+      "correct_verdict": "Go"
+    },
+    "arc": {
+      "archetype": null,
+      "act": null,
+      "recurrence_group_id": null
+    }
+  },
+  {
+    "id": "rel-15",
+    "pr_number": 114,
+    "commit_sha": "c5d6e7f8a9b0c5d6e7f8a9b0c5d6e7f8a9b0c5d6",
+    "timestamp": "2026-05-26T10:00:00Z",
+    "author": "olivia_dev",
+    "code": {
+      "diff_summary": "Add bulk delete endpoint for admin panel (WIP - test coverage incomplete)",
+      "changed_files": ["src/api/admin.py", "src/core/bulk_ops.py"],
+      "risk_flags": [],
+      "lines_changed": 130
+    },
+    "ci": {
+      "tests_pass": false,
+      "coverage": 0.41,
+      "lint_pass": true,
+      "build_pass": true,
+      "security_scan_pass": true
+    },
+    "requirement": {
+      "requirement_ids": ["REQ-ADMIN-BULK"],
+      "acceptance_criteria": [
+        "管理パネルから複数レコードを一括削除できる",
+        "削除前に確認ダイアログが表示される"
+      ],
+      "release_note": "管理パネルの一括削除機能を追加（テスト不十分のためWIP）。"
+    },
+    "post_events": [],
+    "labels": {
+      "incident_axis": {
+        "value": "ok",
+        "window": "24h",
+        "confirmed_at": "2026-05-27T10:00:00Z"
+      },
+      "requirement_axis": {
+        "value": "met",
+        "status": "final",
+        "finalized_at": "2026-06-25T10:00:00Z"
+      },
+      "correct_verdict": "No-Go"
+    },
+    "arc": {
+      "archetype": null,
+      "act": null,
+      "recurrence_group_id": null
+    }
+  },
+  {
+    "id": "rel-16",
+    "pr_number": 115,
+    "commit_sha": "d6e7f8a9b0c1d6e7f8a9b0c1d6e7f8a9b0c1d6e7",
+    "timestamp": "2026-05-27T14:00:00Z",
+    "author": "peter_ui",
+    "code": {
+      "diff_summary": "Add tooltips and help text to form fields",
+      "changed_files": ["src/ui/forms.py", "src/ui/tooltips.py", "docs/ui-guide.md"],
+      "risk_flags": [],
+      "lines_changed": 70
+    },
+    "ci": {
+      "tests_pass": true,
+      "coverage": 0.80,
+      "lint_pass": true,
+      "build_pass": true,
+      "security_scan_pass": true
+    },
+    "requirement": {
+      "requirement_ids": ["REQ-UI-FORMS"],
+      "acceptance_criteria": [
+        "入力フォームのフィールドにツールチップが表示される",
+        "ツールチップのテキストが要件定義書の説明と一致する"
+      ],
+      "release_note": "フォームフィールドにツールチップとヘルプテキストを追加。"
+    },
+    "post_events": [],
+    "labels": {
+      "incident_axis": {
+        "value": "ok",
+        "window": "24h",
+        "confirmed_at": "2026-05-28T14:00:00Z"
+      },
+      "requirement_axis": {
+        "value": "met",
+        "status": "final",
+        "finalized_at": "2026-06-26T14:00:00Z"
+      },
+      "correct_verdict": "Go"
+    },
+    "arc": {
+      "archetype": null,
+      "act": null,
+      "recurrence_group_id": null
+    }
+  },
+  {
+    "id": "rel-17",
+    "pr_number": 116,
+    "commit_sha": "e7f8a9b0c1d2e7f8a9b0c1d2e7f8a9b0c1d2e7f8",
+    "timestamp": "2026-05-28T10:30:00Z",
+    "author": "quinn_eng",
+    "code": {
+      "diff_summary": "Optimize image loading with lazy loading and WebP conversion",
+      "changed_files": ["src/ui/images.py", "src/core/image_processor.py", "tests/test_images.py"],
+      "risk_flags": [],
+      "lines_changed": 100
+    },
+    "ci": {
+      "tests_pass": true,
+      "coverage": 0.87,
+      "lint_pass": true,
+      "build_pass": true,
+      "security_scan_pass": true
+    },
+    "requirement": {
+      "requirement_ids": ["REQ-PERF-IMAGES"],
+      "acceptance_criteria": [
+        "画像がビューポートに入ったときにのみロードされる",
+        "WebP形式への変換によりファイルサイズが30%以上削減される"
+      ],
+      "release_note": "画像の遅延読み込みとWebP変換を実装。ページ初期ロードを最適化。"
+    },
+    "post_events": [],
+    "labels": {
+      "incident_axis": {
+        "value": "ok",
+        "window": "24h",
+        "confirmed_at": "2026-05-29T10:30:00Z"
+      },
+      "requirement_axis": {
+        "value": "met",
+        "status": "final",
+        "finalized_at": "2026-06-27T10:30:00Z"
+      },
+      "correct_verdict": "Go"
+    },
+    "arc": {
+      "archetype": null,
+      "act": null,
+      "recurrence_group_id": null
+    }
+  },
+  {
+    "id": "rel-18",
+    "pr_number": 117,
+    "commit_sha": "f8a9b0c1d2e3f8a9b0c1d2e3f8a9b0c1d2e3f8a9",
+    "timestamp": "2026-05-29T15:00:00Z",
+    "author": "rachel_core",
+    "code": {
+      "diff_summary": "Add health check endpoint with dependency status",
+      "changed_files": ["src/api/health.py", "src/core/health_checks.py", "tests/test_health.py"],
+      "risk_flags": [],
+      "lines_changed": 80
+    },
+    "ci": {
+      "tests_pass": true,
+      "coverage": 0.93,
+      "lint_pass": true,
+      "build_pass": true,
+      "security_scan_pass": true
+    },
+    "requirement": {
+      "requirement_ids": ["REQ-OPS-HEALTH"],
+      "acceptance_criteria": [
+        "ヘルスチェックエンドポイントがDB/Redis/外部API の状態を返す",
+        "依存サービスが落ちている場合に503を返す"
+      ],
+      "release_note": "ヘルスチェックエンドポイントを追加。DB/Redis/外部API の依存関係状態を返却。"
+    },
+    "post_events": [],
+    "labels": {
+      "incident_axis": {
+        "value": "ok",
+        "window": "24h",
+        "confirmed_at": "2026-05-30T15:00:00Z"
+      },
+      "requirement_axis": {
+        "value": "met",
+        "status": "final",
+        "finalized_at": "2026-06-28T15:00:00Z"
+      },
+      "correct_verdict": "Go"
+    },
+    "arc": {
+      "archetype": null,
+      "act": null,
+      "recurrence_group_id": null
+    }
+  },
+  {
+    "id": "rel-19",
+    "pr_number": 118,
+    "commit_sha": "a9b0c1d2e3f4a9b0c1d2e3f4a9b0c1d2e3f4a9b0",
+    "timestamp": "2026-06-01T10:00:00Z",
+    "author": "sam_db",
+    "code": {
+      "diff_summary": "Alter users table to add last_login_at column without default value",
+      "changed_files": ["db/migrations/0051_alter_users.sql"],
+      "risk_flags": [],
+      "lines_changed": 20
+    },
+    "ci": {
+      "tests_pass": true,
+      "coverage": 0.82,
+      "lint_pass": true,
+      "build_pass": true,
+      "security_scan_pass": true
+    },
+    "requirement": {
+      "requirement_ids": ["REQ-USER-LASTLOGIN"],
+      "acceptance_criteria": [
+        "ユーザーの最終ログイン日時が記録される",
+        "既存ユーザーのlast_login_atはNULLで初期化される"
+      ],
+      "release_note": "usersテーブルにlast_login_atカラムを追加。最終ログイン日時を記録。"
+    },
+    "post_events": [],
+    "labels": {
+      "incident_axis": {
+        "value": "ok",
+        "window": "24h",
+        "confirmed_at": "2026-06-02T10:00:00Z"
+      },
+      "requirement_axis": {
+        "value": "met",
+        "status": "final",
+        "finalized_at": "2026-07-01T10:00:00Z"
+      },
+      "correct_verdict": "No-Go"
+    },
+    "arc": {
+      "archetype": "db_migration",
+      "act": "3_catch",
+      "recurrence_group_id": "grp-db-mig"
+    }
+  },
+  {
+    "id": "rel-20",
+    "pr_number": 119,
+    "commit_sha": "b0c1d2e3f4a5b0c1d2e3f4a5b0c1d2e3f4a5b0c1",
+    "timestamp": "2026-06-03T09:00:00Z",
+    "author": "tina_api",
+    "code": {
+      "diff_summary": "Add webhook retry mechanism with exponential backoff",
+      "changed_files": ["src/api/webhooks.py", "src/core/retry.py", "tests/test_webhooks.py"],
+      "risk_flags": [],
+      "lines_changed": 115
+    },
+    "ci": {
+      "tests_pass": true,
+      "coverage": 0.88,
+      "lint_pass": true,
+      "build_pass": true,
+      "security_scan_pass": true
+    },
+    "requirement": {
+      "requirement_ids": ["REQ-WEBHOOK-RETRY"],
+      "acceptance_criteria": [
+        "Webhookの送信失敗時に指数バックオフでリトライされる",
+        "最大5回リトライ後にデッドレターキューへ移動する"
+      ],
+      "release_note": "Webhookリトライ機構を追加。指数バックオフで最大5回リトライ後にDLQへ移動。"
+    },
+    "post_events": [],
+    "labels": {
+      "incident_axis": {
+        "value": "ok",
+        "window": "24h",
+        "confirmed_at": "2026-06-04T09:00:00Z"
+      },
+      "requirement_axis": {
+        "value": "met",
+        "status": "final",
+        "finalized_at": "2026-07-03T09:00:00Z"
+      },
+      "correct_verdict": "Go"
+    },
+    "arc": {
+      "archetype": null,
+      "act": null,
+      "recurrence_group_id": null
+    }
+  },
+  {
+    "id": "rel-21",
+    "pr_number": 120,
+    "commit_sha": "c1d2e3f4a5b6c1d2e3f4a5b6c1d2e3f4a5b6c1d2",
+    "timestamp": "2026-06-05T11:00:00Z",
+    "author": "uma_ui",
+    "code": {
+      "diff_summary": "Add accessibility improvements: ARIA labels and keyboard navigation",
+      "changed_files": ["src/ui/accessibility.py", "src/ui/nav.py", "docs/accessibility-guide.md"],
+      "risk_flags": [],
+      "lines_changed": 90
+    },
+    "ci": {
+      "tests_pass": true,
+      "coverage": 0.85,
+      "lint_pass": true,
+      "build_pass": true,
+      "security_scan_pass": true
+    },
+    "requirement": {
+      "requirement_ids": ["REQ-A11Y-KEYBOARD"],
+      "acceptance_criteria": [
+        "主要なUI要素にARIAラベルが付与されている",
+        "キーボードのみで全操作が完結できる"
+      ],
+      "release_note": "アクセシビリティ改善。ARIAラベルとキーボードナビゲーションに対応。"
+    },
+    "post_events": [],
+    "labels": {
+      "incident_axis": {
+        "value": "ok",
+        "window": "24h",
+        "confirmed_at": "2026-06-06T11:00:00Z"
+      },
+      "requirement_axis": {
+        "value": "met",
+        "status": "final",
+        "finalized_at": "2026-07-05T11:00:00Z"
+      },
+      "correct_verdict": "Go"
+    },
+    "arc": {
+      "archetype": null,
+      "act": null,
+      "recurrence_group_id": null
+    }
+  },
+  {
+    "id": "rel-22",
+    "pr_number": 121,
+    "commit_sha": "d2e3f4a5b6c7d2e3f4a5b6c7d2e3f4a5b6c7d2e3",
+    "timestamp": "2026-06-07T10:00:00Z",
+    "author": "victor_billing",
+    "code": {
+      "diff_summary": "Implement partial refund processing for subscription cancellations",
+      "changed_files": ["src/billing/refund.py"],
+      "risk_flags": [],
+      "lines_changed": 160
+    },
+    "ci": {
+      "tests_pass": true,
+      "coverage": 0.80,
+      "lint_pass": true,
+      "build_pass": true,
+      "security_scan_pass": true
+    },
+    "requirement": {
+      "requirement_ids": ["REQ-BILL-REFUND"],
+      "acceptance_criteria": [
+        "返金時に在庫を戻す",
+        "部分返金の端数を正しく丸める"
+      ],
+      "release_note": "サブスクリプションキャンセル時の部分返金処理を実装。端数丸め処理を含む。"
+    },
+    "post_events": [],
+    "labels": {
+      "incident_axis": {
+        "value": "ok",
+        "window": "24h",
+        "confirmed_at": "2026-06-08T10:00:00Z"
+      },
+      "requirement_axis": {
+        "value": "met",
+        "status": "final",
+        "finalized_at": "2026-07-07T10:00:00Z"
+      },
+      "correct_verdict": "No-Go"
+    },
+    "arc": {
+      "archetype": "requirement_miss",
+      "act": "3_catch",
+      "recurrence_group_id": "grp-req-billing"
+    }
+  },
+  {
+    "id": "rel-23",
+    "pr_number": 122,
+    "commit_sha": "e3f4a5b6c7d8e3f4a5b6c7d8e3f4a5b6c7d8e3f4",
+    "timestamp": "2026-06-09T09:30:00Z",
+    "author": "wendy_core",
+    "code": {
+      "diff_summary": "Add structured logging with JSON format for Cloud Logging compatibility",
+      "changed_files": ["src/core/logging.py", "src/core/formatters.py", "tests/test_logging.py"],
+      "risk_flags": [],
+      "lines_changed": 85
+    },
+    "ci": {
+      "tests_pass": true,
+      "coverage": 0.90,
+      "lint_pass": true,
+      "build_pass": true,
+      "security_scan_pass": true
+    },
+    "requirement": {
+      "requirement_ids": ["REQ-OPS-LOGGING"],
+      "acceptance_criteria": [
+        "アプリケーションログがJSON形式で出力される",
+        "Cloud Loggingのフィールド仕様に準拠したフォーマットである"
+      ],
+      "release_note": "構造化ログ（JSON形式）を実装。Cloud Logging互換フォーマットで出力。"
+    },
+    "post_events": [],
+    "labels": {
+      "incident_axis": {
+        "value": "ok",
+        "window": "24h",
+        "confirmed_at": "2026-06-10T09:30:00Z"
+      },
+      "requirement_axis": {
+        "value": "met",
+        "status": "final",
+        "finalized_at": "2026-07-09T09:30:00Z"
+      },
+      "correct_verdict": "Go"
+    },
+    "arc": {
+      "archetype": null,
+      "act": null,
+      "recurrence_group_id": null
+    }
+  },
+  {
+    "id": "rel-24",
+    "pr_number": 123,
+    "commit_sha": "f4a5b6c7d8e9f4a5b6c7d8e9f4a5b6c7d8e9f4a5",
+    "timestamp": "2026-06-11T14:00:00Z",
+    "author": "xander_api",
+    "code": {
+      "diff_summary": "Add OpenAPI spec generation and Swagger UI endpoint",
+      "changed_files": ["src/api/openapi.py", "src/api/swagger_ui.py", "docs/api-spec.yaml"],
+      "risk_flags": [],
+      "lines_changed": 120
+    },
+    "ci": {
+      "tests_pass": true,
+      "coverage": 0.86,
+      "lint_pass": true,
+      "build_pass": true,
+      "security_scan_pass": true
+    },
+    "requirement": {
+      "requirement_ids": ["REQ-API-DOCS"],
+      "acceptance_criteria": [
+        "OpenAPI仕様書が自動生成される",
+        "Swagger UIで対話型APIドキュメントが閲覧できる"
+      ],
+      "release_note": "OpenAPI仕様書の自動生成とSwagger UIエンドポイントを追加。"
+    },
+    "post_events": [],
+    "labels": {
+      "incident_axis": {
+        "value": "ok",
+        "window": "24h",
+        "confirmed_at": "2026-06-12T14:00:00Z"
+      },
+      "requirement_axis": {
+        "value": "met",
+        "status": "final",
+        "finalized_at": "2026-07-11T14:00:00Z"
+      },
+      "correct_verdict": "Go"
+    },
+    "arc": {
+      "archetype": null,
+      "act": null,
+      "recurrence_group_id": null
+    }
+  }
+]

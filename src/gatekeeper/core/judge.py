@@ -19,6 +19,8 @@ from __future__ import annotations
 
 from gatekeeper.core.decision import AutonomyLevel, GateDecision
 from gatekeeper.core.hard_guard import hard_guarded_flags
+from gatekeeper.learning.memory import CaseMemory
+from gatekeeper.learning.rulebook import RuleAction, Rulebook
 from gatekeeper.models import ReleaseRecord, Verdict
 from gatekeeper.signals import GateSignals, RequirementAssessment, build_signals
 
@@ -28,8 +30,20 @@ CONFIDENCE_THRESHOLD = 0.8
 MODEL_VERSION = "rule-based-v0"
 
 
-def judge(signals: GateSignals, *, threshold: float = CONFIDENCE_THRESHOLD) -> GateDecision:
-    """客観シグナルから条件付き自律の判定を下す（決定論・§3.4 / §7 #5）。"""
+def judge(
+    signals: GateSignals,
+    *,
+    threshold: float = CONFIDENCE_THRESHOLD,
+    rulebook: Rulebook | None = None,
+    memory: CaseMemory | None = None,
+) -> GateDecision:
+    """客観シグナルから条件付き自律の判定を下す（決定論・§3.4 / §7 #5）。
+
+    ``rulebook`` を渡すと、過去の見逃しから学習した **ルール自動進化**（§3.3.1 (3)）を
+    適用する。学習済みブロックルールが発火した変更は「再発する危険な型」として自律ブロック
+    する＝自己改善の「検知」フェーズ。``memory`` を渡すと類似の過去誤判定ケースを
+    Few-shot 参照として根拠に残す。
+    """
     fired: list[str] = []
     rationale: list[str] = []
 
@@ -39,7 +53,20 @@ def judge(signals: GateSignals, *, threshold: float = CONFIDENCE_THRESHOLD) -> G
     ci_green = signals.ci_all_green()
     req = signals.requirement
 
-    # 1) 客観的 No-Go → 自律ブロック（CI赤 / 受け入れ基準が「満たさない」）。
+    # 学習済みルールの発火（自己改善の「検知」・§3.3.1 (3)）。
+    learned_block = []
+    if rulebook is not None:
+        learned_block = [r for r in rulebook.matching(signals) if r.action is RuleAction.BLOCK]
+        for r in learned_block:
+            fired.append(f"learned:{r.id}")
+            rationale.append(f"学習済みルール {r.id} 発火: {r.description}")
+            if memory is not None:
+                for c in memory.similar(signals, archetype=r.archetype):
+                    rationale.append(
+                        f"類似の過去誤判定 {c.release_id} を参照（記憶/Few-shot・§3.3.1）。"
+                    )
+
+    # 1) 客観的 No-Go → 自律ブロック（CI赤 / 受け入れ基準が「満たさない」/ 学習ルール発火）。
     if not ci_green:
         fired.append("ci_not_green")
         rationale.append("CIが全緑ではない（test/lint/build/security_scan のいずれか不合格）。")
@@ -47,7 +74,7 @@ def judge(signals: GateSignals, *, threshold: float = CONFIDENCE_THRESHOLD) -> G
         fired.append("requirement_unmet")
         rationale.append("受け入れ基準に「満たさない」項目がある（要件未達・§3.2.1）。")
 
-    if not ci_green or req.has_unmet():
+    if not ci_green or req.has_unmet() or learned_block:
         return GateDecision(
             verdict=Verdict.NO_GO,
             autonomy=AutonomyLevel.AUTO_BLOCK,
@@ -128,10 +155,18 @@ def judge_record(
     assessment: RequirementAssessment | None = None,
     *,
     threshold: float = CONFIDENCE_THRESHOLD,
+    rulebook: Rulebook | None = None,
+    memory: CaseMemory | None = None,
 ) -> GateDecision:
     """``ReleaseRecord`` を判定する薄いラッパ（合成データのバックテスト用）。
 
     ``assessment`` を省略すると要件充足は全件「検証不能」となり、CIが緑でも
-    人間承認に落ちる（LLMなしの保守的既定・§3.2.1）。
+    人間承認に落ちる（LLMなしの保守的既定・§3.2.1）。``rulebook`` / ``memory`` を
+    渡すと学習済みルール（自己改善）を適用する。
     """
-    return judge(build_signals(record, assessment), threshold=threshold)
+    return judge(
+        build_signals(record, assessment),
+        threshold=threshold,
+        rulebook=rulebook,
+        memory=memory,
+    )
