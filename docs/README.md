@@ -5,6 +5,7 @@ GateKeeper（仮称）の要件・戦略ドキュメント。実装の正本（c
 | ファイル | 内容 |
 |----------|------|
 | [`requirements.md`](requirements.md) | **要件定義書（正本）**。MVPスコープ・設計インバリアント・自己改善ループ・合成データ設計など。迷ったらここを参照。 |
+| [`w1-technical-design.md`](w1-technical-design.md) | **W1 技術設計書**。PRマージゲート骨格（〜6/20）。アーキ図・データモデル・API・タスク分解・審査軸トレーサビリティ。 |
 | [`hackathon/judges-analysis.md`](hackathon/judges-analysis.md) | ハッカソン審査員の分析。 |
 | [`hackathon/judging-criteria-strategy.md`](hackathon/judging-criteria-strategy.md) | 審査基準から逆算した戦略。 |
 
