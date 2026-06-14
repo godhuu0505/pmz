@@ -27,9 +27,7 @@ def test_default_impls_conform_to_ports() -> None:
 def test_inmemory_verdict_store_roundtrip() -> None:
     store: VerdictStore = InMemoryVerdictStore()
     assert store.get("rel-01") is None
-    decision = GateDecision(
-        verdict=Verdict.GO, autonomy=AutonomyLevel.AUTO_APPROVE, confidence=0.9
-    )
+    decision = GateDecision(verdict=Verdict.GO, autonomy=AutonomyLevel.AUTO_APPROVE, confidence=0.9)
     store.save("rel-01", decision)
     assert store.get("rel-01") is decision
 
