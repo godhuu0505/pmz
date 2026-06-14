@@ -13,8 +13,15 @@
 
 from __future__ import annotations
 
+from pmz.learning._paths import dir_glob
 from pmz.learning.rulebook import LearnedRule, RuleAction
-from pmz.models import Archetype, ReleaseRecord
+from pmz.models import (
+    Archetype,
+    IncidentValue,
+    LabelStatus,
+    ReleaseRecord,
+    RequirementValue,
+)
 
 # db_migration 型の危険ファイルを見分けるパス標識（決定論）。
 _MIGRATION_MARKERS = ("migration", "migrations")
@@ -28,9 +35,9 @@ def is_confirmed_bad(record: ReleaseRecord) -> bool:
     """
     inc = record.labels.incident_axis
     req = record.labels.requirement_axis
-    if inc.value.value == "fail":
+    if inc.value is IncidentValue.FAIL:
         return True
-    return req.value.value == "unmet" and req.status.value == "final"
+    return req.value is RequirementValue.UNMET and req.status is LabelStatus.FINAL
 
 
 def learn_rule_from(record: ReleaseRecord, *, version: int) -> LearnedRule | None:
@@ -53,7 +60,7 @@ def learn_rule_from(record: ReleaseRecord, *, version: int) -> LearnedRule | Non
     else:
         targets = list(files)
 
-    globs = sorted({_dir_glob(f) for f in targets if _dir_glob(f)})
+    globs = sorted({g for f in targets if (g := dir_glob(f))})
     if not globs:
         return None
 
@@ -69,10 +76,3 @@ def learn_rule_from(record: ReleaseRecord, *, version: int) -> LearnedRule | Non
         ),
         created_from=record.id,
     )
-
-
-def _dir_glob(path: str) -> str:
-    """ファイルパスを親ディレクトリ配下の glob に一般化（``a/b/c.py`` → ``a/b/*``）。"""
-    if "/" not in path:
-        return ""
-    return path.rsplit("/", 1)[0] + "/*"

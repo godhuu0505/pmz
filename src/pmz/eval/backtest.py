@@ -76,10 +76,11 @@ def train(
 
     for rec in records:
         dec = judge_record(rec, believed_assessment(rec), rulebook=rulebook, memory=memory)
-        online.append((dec.verdict, rec.labels.correct_verdict))
+        online.append((dec.effective_verdict, rec.labels.correct_verdict))
 
-        # 判定後に振り返り: 客観イベントで確定した「見逃し（誤承認）」だけを学習に回す。
-        if dec.verdict is Verdict.GO and is_confirmed_bad(rec):
+        # 判定後に振り返り: 客観イベントで確定した「自律承認の見逃し（誤承認）」だけを学習に回す。
+        # HUMAN_REVIEW は人間が止めうるので学習トリガにしない（実効判定で見る）。
+        if dec.effective_verdict is Verdict.GO and is_confirmed_bad(rec):
             rule = learn_rule_from(rec, version=rulebook.version + 1)
             if rule is not None and not rulebook.has(rule.archetype, rule.file_globs):
                 rulebook.add(rule)
@@ -87,7 +88,7 @@ def train(
                     MisjudgedCase(
                         release_id=rec.id,
                         archetype=rec.arc.archetype,
-                        predicted_verdict=dec.verdict,
+                        predicted_verdict=dec.effective_verdict,
                         correct_verdict=rec.labels.correct_verdict,
                         changed_files=rec.code.changed_files,
                         summary=rec.code.diff_summary,
@@ -115,7 +116,9 @@ def run_self_improvement(records: list[ReleaseRecord] | None = None) -> SelfImpr
 
     # before: 何も学習していない素のゲート。
     before_eval = evaluate(records)
-    before_cm = confusion_matrix((d.verdict, r.labels.correct_verdict) for r, d in before_eval)
+    before_cm = confusion_matrix(
+        (d.effective_verdict, r.labels.correct_verdict) for r, d in before_eval
+    )
 
     # 時系列に学習してルールブックを育てる。
     rulebook, memory, online_pairs = train(records)
@@ -123,12 +126,14 @@ def run_self_improvement(records: list[ReleaseRecord] | None = None) -> SelfImpr
 
     # after: 学習済みルールブックを最初から適用した場合。
     after_eval = evaluate(records, rulebook=rulebook, memory=memory)
-    after_cm = confusion_matrix((d.verdict, r.labels.correct_verdict) for r, d in after_eval)
+    after_cm = confusion_matrix(
+        (d.effective_verdict, r.labels.correct_verdict) for r, d in after_eval
+    )
 
     # 再発アーキタイプの検知率（§6.1 唯一100%と言える強KPI）。
     after_by_id = {r.id: d for r, d in after_eval}
     catches = [r for r in records if r.arc.act is Act.CATCH]
-    detected = sum(1 for r in catches if after_by_id[r.id].verdict is Verdict.NO_GO)
+    detected = sum(1 for r in catches if after_by_id[r.id].effective_verdict is Verdict.NO_GO)
     recurrence_rate = detected / len(catches) if catches else 0.0
 
     before_by_id = {r.id: d for r, d in before_eval}
@@ -169,10 +174,11 @@ def main() -> None:
     print("\n--- タイムライン（見逃す→学習→検知）---")
     for rec, before, after in result.timeline:
         arc = rec.arc.act.value if rec.arc.act else "-"
-        flip = "  ← 学習で検知!" if before.verdict != after.verdict else ""
+        flip = "  ← 学習で検知!" if before.effective_verdict != after.effective_verdict else ""
         print(
             f"  {rec.id} act={arc:8s} 正解={rec.labels.correct_verdict.value:5s} "
-            f"before={before.verdict.value:5s} after={after.verdict.value:5s}{flip}"
+            f"before={before.effective_verdict.value:5s} "
+            f"after={after.effective_verdict.value:5s}{flip}"
         )
 
 

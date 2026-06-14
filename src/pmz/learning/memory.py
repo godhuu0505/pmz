@@ -13,6 +13,7 @@ from __future__ import annotations
 
 from pydantic import BaseModel, ConfigDict, Field
 
+from pmz.learning._paths import parent_dir
 from pmz.models import Archetype, Verdict
 from pmz.signals import GateSignals
 
@@ -48,16 +49,14 @@ class CaseMemory(BaseModel):
 
         判定時に「同じ轍を踏もうとしていないか」を示す Few-shot 事例として使う。
         """
-        dirs = {_dirname(p) for p in signals.code.changed_files}
+        # ルート直下ファイル（親ディレクトリなし）は重なり判定から除外する。
+        # 空文字どうしが一致して無関係な変更を誤って「類似」と拾うのを防ぐ。
+        dirs = {d for d in (parent_dir(p) for p in signals.code.changed_files) if d}
         hits: list[MisjudgedCase] = []
         for c in self.cases:
             if archetype is not None and c.archetype is not archetype:
                 continue
-            if dirs & {_dirname(p) for p in c.changed_files}:
+            case_dirs = {d for d in (parent_dir(p) for p in c.changed_files) if d}
+            if dirs & case_dirs:
                 hits.append(c)
         return hits
-
-
-def _dirname(path: str) -> str:
-    """POSIX パスの親ディレクトリ（区切りが無ければ空文字）。"""
-    return path.rsplit("/", 1)[0] if "/" in path else ""

@@ -4,6 +4,10 @@ from __future__ import annotations
 
 from datetime import datetime
 
+from pmz.core.decision import AutonomyLevel, GateDecision
+from pmz.core.judge import judge
+from pmz.eval.metrics import confusion_matrix
+from pmz.learning.memory import CaseMemory, MisjudgedCase
 from pmz.learning.retrospective import is_confirmed_bad, learn_rule_from
 from pmz.learning.rulebook import LearnedRule, RuleAction, Rulebook
 from pmz.models import (
@@ -19,9 +23,15 @@ from pmz.models import (
     RequirementAxis,
     RequirementSignal,
     RequirementValue,
+    RiskFlag,
     Verdict,
 )
-from pmz.signals import GateSignals
+from pmz.signals import (
+    CriterionResult,
+    CriterionStatus,
+    GateSignals,
+    RequirementAssessment,
+)
 
 
 def _record(
@@ -144,3 +154,58 @@ def test_learn_rule_requirement_miss_uses_all_changed_dirs() -> None:
 def test_learn_rule_returns_none_without_archetype() -> None:
     rec = _record(changed_files=["src/api/x.py"], archetype=None)
     assert learn_rule_from(rec, version=1) is None
+
+
+def test_memory_does_not_match_root_level_files() -> None:
+    # ルート直下ファイル同士（親ディレクトリなし）は「類似」と判定しない。
+    mem = CaseMemory()
+    mem.add(
+        MisjudgedCase(
+            release_id="r1",
+            archetype=None,
+            predicted_verdict=Verdict.GO,
+            correct_verdict=Verdict.NO_GO,
+            changed_files=["CHANGELOG.md"],
+        )
+    )
+    assert mem.similar(_signals(["README.md"])) == []
+    # 同一ディレクトリ配下なら類似ヒットする。
+    mem.add(
+        MisjudgedCase(
+            release_id="r2",
+            archetype=None,
+            predicted_verdict=Verdict.GO,
+            correct_verdict=Verdict.NO_GO,
+            changed_files=["src/billing/a.py"],
+        )
+    )
+    assert [c.release_id for c in mem.similar(_signals(["src/billing/b.py"]))] == ["r2"]
+
+
+def test_effective_verdict_treats_human_review_as_not_approved() -> None:
+    # HUMAN_REVIEW（棄権）は自律承認ではないので実効判定は No-Go。
+    human = GateDecision(verdict=Verdict.GO, autonomy=AutonomyLevel.HUMAN_REVIEW, confidence=0.9)
+    assert human.effective_verdict is Verdict.NO_GO
+    auto = GateDecision(verdict=Verdict.GO, autonomy=AutonomyLevel.AUTO_APPROVE, confidence=0.9)
+    assert auto.effective_verdict is Verdict.GO
+
+
+def test_hard_guarded_bad_release_not_counted_as_false_approve() -> None:
+    # 高リスク領域は確信度が高くてもハードガードで人間承認に落ちる（§7 #5）。
+    sig = GateSignals(
+        code=CodeSignal(
+            diff_summary="x",
+            changed_files=["db/migrations/x.sql"],
+            risk_flags=[RiskFlag.DB_MIGRATION],
+        ),
+        ci=CISignal(tests_pass=True),
+        requirement=RequirementAssessment(
+            results=[CriterionResult(criterion="c", status=CriterionStatus.MET, confidence=0.95)]
+        ),
+    )
+    dec = judge(sig)
+    assert dec.needs_human
+    # correct=No-Go の悪いリリースでも、実効判定では誤承認(FP)に数えない（KPI の頑健性）。
+    cm = confusion_matrix([(dec.effective_verdict, Verdict.NO_GO)])
+    assert cm.fp == 0
+    assert cm.tn == 1
