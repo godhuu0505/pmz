@@ -1,6 +1,23 @@
 # ai-hackathon
 DevOps × AI Agent Hackathon 2026: AI エージェントを「つくる、まわす、とどける」夏
 
+提出作品 **GateKeeper（仮称）** — AIリリース判定ゲートキーパー × 自己改善エージェント。
+要件定義は [`release-gatekeeper-agent-requirements.md`](release-gatekeeper-agent-requirements.md)。
+
+## AI駆動開発ハーネス
+
+本リポジトリは Claude Code で AI 駆動開発を回すための **ハーネス（足場）** を備えています。
+
+- プロジェクトメモリ: [`CLAUDE.md`](CLAUDE.md)（MVPスコープ・設計インバリアント・コマンド・規約）
+- ハーネスの設計意図と適用したベストプラクティス: [`.claude/README.md`](.claude/README.md)
+- 起動フックが `uv sync` で依存を導入するため、セッション開始後すぐ `uv run pytest -q` /
+  `uv run ruff check .` が通ります。
+
+### MVP スケルトン
+
+- `src/gatekeeper/models.py` — 合成リリース履歴のデータモデル（要件 §9.1）。
+- `tests/` — pytest。lint は ruff。`uv sync` → `uv run pytest -q` で検証。
+
 ## grill-me — 要件ヒアリングスキル
 
 オープンソースの [`grill-me`](https://github.com/mattpocock/skills) の思想をベースに、
