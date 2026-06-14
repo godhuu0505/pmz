@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="460" viewBox="0 0 880 460" font-family="sans-serif">
+<rect width="880" height="460" fill="#ffffff"/>
+<text x="440" y="32" text-anchor="middle" font-size="20" font-weight="bold" fill="#111">pmz 自己改善の時系列（見逃す→学習→検知）</text>
+<line x1="64" y1="384.0" x2="852" y2="384.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="56" y="388.0" text-anchor="end" font-size="11" fill="#6b7280">0%</text>
+<line x1="64" y1="306.0" x2="852" y2="306.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="56" y="310.0" text-anchor="end" font-size="11" fill="#6b7280">25%</text>
+<line x1="64" y1="228.0" x2="852" y2="228.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="56" y="232.0" text-anchor="end" font-size="11" fill="#6b7280">50%</text>
+<line x1="64" y1="150.0" x2="852" y2="150.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="56" y="154.0" text-anchor="end" font-size="11" fill="#6b7280">75%</text>
+<line x1="64" y1="72.0" x2="852" y2="72.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="56" y="76.0" text-anchor="end" font-size="11" fill="#6b7280">100%</text>
+<line x1="269.6" y1="72" x2="269.6" y2="384.0" stroke="#f59e0b" stroke-width="1" stroke-dasharray="4 3" opacity="0.7"/>
+<text x="269.6" y="66.0" text-anchor="middle" font-size="10" fill="#f59e0b">rel-07 見逃し→学習</text>
+<line x1="440.9" y1="72" x2="440.9" y2="384.0" stroke="#f59e0b" stroke-width="1" stroke-dasharray="4 3" opacity="0.7"/>
+<text x="440.9" y="66.0" text-anchor="middle" font-size="10" fill="#f59e0b">rel-12 見逃し→学習</text>
+<line x1="680.7" y1="72" x2="680.7" y2="384.0" stroke="#10b981" stroke-width="1" stroke-dasharray="4 3" opacity="0.7"/>
+<text x="680.7" y="66.0" text-anchor="middle" font-size="10" fill="#10b981">rel-19 検知</text>
+<line x1="783.5" y1="72" x2="783.5" y2="384.0" stroke="#10b981" stroke-width="1" stroke-dasharray="4 3" opacity="0.7"/>
+<text x="783.5" y="66.0" text-anchor="middle" font-size="10" fill="#10b981">rel-22 検知</text>
+<polyline fill="none" stroke="#3b82f6" stroke-width="2.5" stroke-linejoin="round" points="64.0,384.0 98.3,384.0 132.5,384.0 166.8,384.0 201.0,384.0 235.3,384.0 269.6,384.0 303.8,384.0 338.1,384.0 372.3,384.0 406.6,384.0 440.9,384.0 475.1,384.0 509.4,384.0 543.7,384.0 577.9,384.0 612.2,384.0 646.4,384.0 680.7,384.0 715.0,384.0 749.2,384.0 783.5,384.0 817.7,384.0 852.0,384.0"/>
+<polyline fill="none" stroke="#ef4444" stroke-width="2.5" stroke-linejoin="round" points="64.0,384.0 98.3,384.0 132.5,384.0 166.8,384.0 201.0,384.0 235.3,384.0 269.6,72.0 303.8,72.0 338.1,72.0 372.3,72.0 406.6,72.0 440.9,72.0 475.1,72.0 509.4,72.0 543.7,176.0 577.9,176.0 612.2,176.0 646.4,176.0 680.7,228.0 715.0,228.0 749.2,228.0 783.5,259.2 817.7,259.2 852.0,259.2"/>
+<circle cx="64.0" cy="384.0" r="2.6" fill="#ef4444"/>
+<circle cx="98.3" cy="384.0" r="2.6" fill="#ef4444"/>
+<circle cx="132.5" cy="384.0" r="2.6" fill="#ef4444"/>
+<circle cx="166.8" cy="384.0" r="2.6" fill="#ef4444"/>
+<circle cx="201.0" cy="384.0" r="2.6" fill="#ef4444"/>
+<circle cx="235.3" cy="384.0" r="2.6" fill="#ef4444"/>
+<circle cx="269.6" cy="72.0" r="2.6" fill="#ef4444"/>
+<circle cx="303.8" cy="72.0" r="2.6" fill="#ef4444"/>
+<circle cx="338.1" cy="72.0" r="2.6" fill="#ef4444"/>
+<circle cx="372.3" cy="72.0" r="2.6" fill="#ef4444"/>
+<circle cx="406.6" cy="72.0" r="2.6" fill="#ef4444"/>
+<circle cx="440.9" cy="72.0" r="2.6" fill="#ef4444"/>
+<circle cx="475.1" cy="72.0" r="2.6" fill="#ef4444"/>
+<circle cx="509.4" cy="72.0" r="2.6" fill="#ef4444"/>
+<circle cx="543.7" cy="176.0" r="2.6" fill="#ef4444"/>
+<circle cx="577.9" cy="176.0" r="2.6" fill="#ef4444"/>
+<circle cx="612.2" cy="176.0" r="2.6" fill="#ef4444"/>
+<circle cx="646.4" cy="176.0" r="2.6" fill="#ef4444"/>
+<circle cx="680.7" cy="228.0" r="2.6" fill="#ef4444"/>
+<circle cx="715.0" cy="228.0" r="2.6" fill="#ef4444"/>
+<circle cx="749.2" cy="228.0" r="2.6" fill="#ef4444"/>
+<circle cx="783.5" cy="259.2" r="2.6" fill="#ef4444"/>
+<circle cx="817.7" cy="259.2" r="2.6" fill="#ef4444"/>
+<circle cx="852.0" cy="259.2" r="2.6" fill="#ef4444"/>
+<text x="64.0" y="402.0" text-anchor="middle" font-size="11" fill="#6b7280">rel-01</text>
+<text x="852.0" y="402.0" text-anchor="middle" font-size="11" fill="#6b7280">rel-24</text>
+<rect x="64" y="419" width="14" height="4" fill="#ef4444"/>
+<text x="84" y="426" font-size="12" fill="#374151">累積 誤承認率</text>
+<rect x="194" y="419" width="14" height="4" fill="#3b82f6"/>
+<text x="214" y="426" font-size="12" fill="#374151">累積 誤ブロック率</text>
+<text x="852" y="52" text-anchor="end" font-size="12" fill="#111">誤承認率 80% → 0%   |   再発検知率 100%   |   誤ブロック率 0%（不変）</text>
+</svg>

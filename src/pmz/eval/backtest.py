@@ -64,19 +64,19 @@ def evaluate(
 
 def train(
     records: list[ReleaseRecord],
-) -> tuple[Rulebook, CaseMemory, list[tuple[Verdict, Verdict]]]:
+) -> tuple[Rulebook, CaseMemory, list[tuple[ReleaseRecord, GateDecision]]]:
     """時系列に1件ずつ判定しながら、確定した見逃しから学習する（オンライン自己改善）。
 
-    返り値の3要素目は時系列順の ``(予測, 正解)`` ペア（実運用さながらの混同行列用）。
+    返り値の3要素目は時系列順の ``(レコード, その時点の判定)``（実運用さながらの推移用）。
     trap は学習前なので見逃し、catch は学習後なので検知される。
     """
     rulebook = Rulebook()
     memory = CaseMemory()
-    online: list[tuple[Verdict, Verdict]] = []
+    online: list[tuple[ReleaseRecord, GateDecision]] = []
 
     for rec in records:
         dec = judge_record(rec, believed_assessment(rec), rulebook=rulebook, memory=memory)
-        online.append((dec.effective_verdict, rec.labels.correct_verdict))
+        online.append((rec, dec))
 
         # 判定後に振り返り: 客観イベントで確定した「自律承認の見逃し（誤承認）」だけを学習に回す。
         # HUMAN_REVIEW は人間が止めうるので学習トリガにしない（実効判定で見る）。
@@ -108,6 +108,8 @@ class SelfImprovementResult:
     rulebook: Rulebook
     recurrence_detection_rate: float
     timeline: list[tuple[ReleaseRecord, GateDecision, GateDecision]] = field(default_factory=list)
+    # 時系列順の (レコード, その時点の判定)。ルールブックが育つ「実運用」推移（可視化に使う）。
+    online_timeline: list[tuple[ReleaseRecord, GateDecision]] = field(default_factory=list)
 
 
 def run_self_improvement(records: list[ReleaseRecord] | None = None) -> SelfImprovementResult:
@@ -121,8 +123,10 @@ def run_self_improvement(records: list[ReleaseRecord] | None = None) -> SelfImpr
     )
 
     # 時系列に学習してルールブックを育てる。
-    rulebook, memory, online_pairs = train(records)
-    online_cm = confusion_matrix(online_pairs)
+    rulebook, memory, online_timeline = train(records)
+    online_cm = confusion_matrix(
+        (d.effective_verdict, r.labels.correct_verdict) for r, d in online_timeline
+    )
 
     # after: 学習済みルールブックを最初から適用した場合。
     after_eval = evaluate(records, rulebook=rulebook, memory=memory)
@@ -146,6 +150,7 @@ def run_self_improvement(records: list[ReleaseRecord] | None = None) -> SelfImpr
         rulebook=rulebook,
         recurrence_detection_rate=recurrence_rate,
         timeline=timeline,
+        online_timeline=online_timeline,
     )
 
 

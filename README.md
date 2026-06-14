@@ -40,6 +40,15 @@ uv run python -m pmz.eval.backtest
 結果: **誤承認率 80% → 0%**、**再発アーキタイプ検知率 100%**、**誤ブロック率は 0% で不変**
 （KPI §6.1 を達成）。
 
+時系列の可視化（依存ゼロで SVG を生成・§6.1 デモの目玉）:
+```
+uv run python -m pmz.eval.visualize    # docs/assets/self_improvement.svg を書き出す
+```
+![自己改善の時系列](docs/assets/self_improvement.svg)
+
+誤承認率が trap（見逃し→学習）で跳ね、catch（検知）以降は下がっていく一方、誤ブロック率は
+0% のまま不変 ――「賢くなっている様子」を一枚で示します。
+
 ### W3: マルチエージェント＋権限分離＋監査証跡（§4.1 / §7 #3・#4 / §8.1 ⑤⑥）
 
 - `src/pmz/agents/` — オーケストレータ＋3つの **読むエージェント**（`code_risk` / `pm_req` /
