@@ -1,4 +1,7 @@
 # ai-hackathon
+
+[![CI](https://github.com/godhuu0505/ai-hackathon/actions/workflows/ci.yml/badge.svg)](https://github.com/godhuu0505/ai-hackathon/actions/workflows/ci.yml)
+
 DevOps × AI Agent Hackathon 2026: AI エージェントを「つくる、まわす、とどける」夏
 
 提出作品 **pmz** — AIリリース判定ゲートキーパー × 自己改善エージェント。

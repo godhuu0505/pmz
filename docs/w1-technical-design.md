@@ -191,6 +191,7 @@ ai-hackathon/
 │  ├─ test_hard_guard.py       # + ハードガードは決定論的＝単体テスト必須
 │  └─ test_judge_smoke.py      # + judge スモーク
 ├─ .github/workflows/
+│  ├─ ci.yml                   # + lint+test（ruff/pytest）をPRで実行
 │  ├─ deploy.yml               # + Cloud Run デプロイ（まわす）
 │  └─ gate.yml                 # + 従経路: PRでpmz CLIを実行
 ├─ CLAUDE.md                   # 既存: 設計インバリアント・規約（🎯吉川・佐藤将高）
@@ -327,6 +328,7 @@ pmz judge --record data/synthetic/r07.yaml   # 合成データを判定（回帰
 
 ## 9. CI/CD・IaC（W1で「まわす」を最小実装）
 
+- **`.github/workflows/ci.yml`**: PR/main push で `ruff check` + `ruff format --check` + `pytest` を実行（MVPスケルトンの基盤検証ゲート）。
 - **`.github/workflows/deploy.yml`**: main更新で `app/` をビルド→Cloud Runへデプロイ（WIF推奨／鍵レス）。
 - **`.github/workflows/gate.yml`**: PRで `pmz-cli` を回し、**自分自身のPRをpmzで判定**（ドッグフーディング）。
 - **`infra/terraform/`**: Cloud Run / Firestore / Service Account / 必要IAM の雛形（W1はapplyできる最小集合）。
