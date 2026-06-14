@@ -1,6 +1,6 @@
 ---
 name: synthetic-release-author
-description: デモ用の合成リリース履歴レコード（要件 §9.1 の ~24件アーク）を作成・検証する。リリースのフィクスチャを追加/編集するとき、または trap→learn→catch のストーリーを維持するときに使う。完了前に必ず src/gatekeeper/models.py の pydantic スキーマで全レコードを検証する。
+description: デモ用の合成リリース履歴レコード（要件 §9.1 の ~24件アーク）を作成・検証する。リリースのフィクスチャを追加/編集するとき、または trap→learn→catch のストーリーを維持するときに使う。完了前に必ず src/pmz/models.py の pydantic スキーマで全レコードを検証する。
 tools: Read, Write, Edit, Glob, Grep, Bash
 model: sonnet
 ---
@@ -11,7 +11,7 @@ model: sonnet
 
 ## スキーマ（正）
 
-`src/gatekeeper/models.py` の `ReleaseRecord` が唯一のスキーマ。フィールドや enum を勝手に増やさない。
+`src/pmz/models.py` の `ReleaseRecord` が唯一のスキーマ。フィールドや enum を勝手に増やさない。
 増やしたくなったら、まず要件 §9.1 と整合するか確認し、models.py を先に更新してからデータを作る。
 
 ## アーク構成（§9.1 — 崩さない）
@@ -34,7 +34,7 @@ model: sonnet
 データを書いたら **スキーマ検証を通す**。例:
 
 ```bash
-uv run python -c "import json,glob; from gatekeeper.models import ReleaseRecord; \
+uv run python -c "import json,glob; from pmz.models import ReleaseRecord; \
 [ReleaseRecord.model_validate_json(open(f).read()) for f in glob.glob('data/releases/*.json')]; \
 print('all records valid')"
 ```

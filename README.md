@@ -4,7 +4,8 @@
 
 DevOps × AI Agent Hackathon 2026: AI エージェントを「つくる、まわす、とどける」夏
 
-提出作品 **GateKeeper（仮称）** — AIリリース判定ゲートキーパー × 自己改善エージェント。
+提出作品 **pmz** — AIリリース判定ゲートキーパー × 自己改善エージェント。
+名称 `pmz` の由来は **PM観点 × Z軸（自己改善）**（要件 [§1.1](docs/requirements.md)）。
 要件定義は [`docs/requirements.md`](docs/requirements.md)、W1技術設計は [`docs/w1-technical-design.md`](docs/w1-technical-design.md)。
 
 ## AI駆動開発ハーネス
@@ -18,7 +19,7 @@ DevOps × AI Agent Hackathon 2026: AI エージェントを「つくる、まわ
 
 ### MVP スケルトン
 
-- `src/gatekeeper/models.py` — 合成リリース履歴のデータモデル（要件 §9.1）。
+- `src/pmz/models.py` — 合成リリース履歴のデータモデル（要件 §9.1）。
 - `tests/` — pytest。lint は ruff。`uv sync` → `uv run pytest -q` で検証。
 
 ## grill-me — 要件ヒアリングスキル

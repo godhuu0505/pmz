@@ -13,7 +13,7 @@ from enum import StrEnum
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from gatekeeper.models import Verdict
+from pmz.models import Verdict
 
 
 class AutonomyLevel(StrEnum):
