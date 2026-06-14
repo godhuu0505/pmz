@@ -1,4 +1,4 @@
-# GateKeeper — W1 技術設計書（PRマージゲート骨格）
+# pmz — W1 技術設計書（PRマージゲート骨格）
 
 > 作成日: 2026年6月14日 / 対象期間: **W1 (〜6/20)**
 > 親ドキュメント: [`requirements.md`](requirements.md)（要件 v1.0 / B1〜B6 確定）・[`../CLAUDE.md`](../CLAUDE.md)（設計インバリアント）
@@ -61,8 +61,8 @@ CI回帰テスト自動ゲート／ルール重複排除・性能ベース廃止
 ```mermaid
 flowchart LR
   Dev[開発者] -->|PR作成/更新| GH[GitHub Repo]
-  GH -->|webhook: pull_request / check_suite| WH[Cloud Run: gatekeeper-svc]
-  Act[GitHub Actions CI] -.->|従経路: gatekeeper-cli| WH
+  GH -->|webhook: pull_request / check_suite| WH[Cloud Run: pmz-svc]
+  Act[GitHub Actions CI] -.->|従経路: pmz-cli| WH
   subgraph CR["Cloud Run (常駐・オートスケール)"]
     WH --> Q{署名検証 + 冪等}
     Q --> ORCH[Orchestrator Agent / ADK]
@@ -89,7 +89,7 @@ flowchart LR
 | 経路 | 役割 | 実装 |
 |------|------|------|
 | **主: GitHub App + Webhook** | 本番フロー。PRイベントで自動発火し Check Run を返す。**常駐サービスのオートスケール／観測性の実演**になる。 | Cloud Run の `POST /webhook/github`。HMAC署名検証＋ `X-GitHub-Delivery` 冪等。 |
-| **従: GitHub Actions → `gatekeeper-cli`** | デモ自由度＆ローカル/CI再現用。任意のPR/合成データに対し**手元から判定を再実行**できる。回帰デモやスクショ撮影に有効。 | 同一の判定コアを叩く薄いCLI。CIから `POST /v1/judge` を呼ぶ or コンテナを直接実行。 |
+| **従: GitHub Actions → `pmz-cli`** | デモ自由度＆ローカル/CI再現用。任意のPR/合成データに対し**手元から判定を再実行**できる。回帰デモやスクショ撮影に有効。 | 同一の判定コアを叩く薄いCLI。CIから `POST /v1/judge` を呼ぶ or コンテナを直接実行。 |
 
 > **判定コアは1つ**（`core.judge(signals) -> GateDecision`）。Webhookハンドラも CLI も**この同一関数を呼ぶだけ**にして、二経路の判定差異をゼロにする。
 
@@ -101,7 +101,7 @@ flowchart LR
 sequenceDiagram
   actor Dev as 開発者
   participant GH as GitHub
-  participant SVC as Cloud Run (gatekeeper-svc)
+  participant SVC as Cloud Run (pmz-svc)
   participant ADK as Orchestrator (ADK)
   participant GEM as Gemini
   participant FS as Firestore
@@ -129,7 +129,7 @@ sequenceDiagram
 ## 3. 技術スタックと選定理由
 
 > **既存スケルトンの上に積む**: main には既に `pyproject.toml`（**uv / Python 3.11 / ruff / pytest**）、
-> `src/gatekeeper/models.py`（`ReleaseRecord` 等のドメインモデル＝要件 §9.1）、`CLAUDE.md`（設計インバリアント）、
+> `src/pmz/models.py`（`ReleaseRecord` 等のドメインモデル＝要件 §9.1）、`CLAUDE.md`（設計インバリアント）、
 > `.claude/`（SessionStartフック・サブエージェント・`/trace`）が揃っている。W1はこれを土台に拡張する（再発明しない）。
 
 | レイヤ | 採用 | 理由（＋🎯審査効果） |
@@ -154,14 +154,14 @@ sequenceDiagram
 
 ## 4. リポジトリ構成（W1で敷く骨格）
 
-既存の `src/gatekeeper/`（`models.py` 済み）・`tests/`・`.claude/`・`CLAUDE.md` を土台に、W1で追加する要素を `+` で示す。
+既存の `src/pmz/`（`models.py` 済み）・`tests/`・`.claude/`・`CLAUDE.md` を土台に、W1で追加する要素を `+` で示す。
 
 ```
 ai-hackathon/
 ├─ docs/
 │  ├─ requirements.md          # 要件定義（正本・既存）
 │  └─ w1-technical-design.md   # 本書
-├─ src/gatekeeper/             # アプリ本体（既存パッケージを拡張）
+├─ src/pmz/             # アプリ本体（既存パッケージを拡張）
 │  ├─ models.py                # 既存: ReleaseRecord 等（要件 §9.1）
 │  ├─ api/                     # + FastAPI: /webhook/github, /v1/judge, /healthz
 │  │  └─ main.py
@@ -192,7 +192,7 @@ ai-hackathon/
 │  └─ test_judge_smoke.py      # + judge スモーク
 ├─ .github/workflows/
 │  ├─ deploy.yml               # + Cloud Run デプロイ（まわす）
-│  └─ gate.yml                 # + 従経路: PRでgatekeeper CLIを実行
+│  └─ gate.yml                 # + 従経路: PRでpmz CLIを実行
 ├─ CLAUDE.md                   # 既存: 設計インバリアント・規約（🎯吉川・佐藤将高）
 └─ README.md
 ```
@@ -204,7 +204,7 @@ ai-hackathon/
 
 ## 5. データモデル（W1）
 
-要件 §9.1 の `release_record` スキーマは **既存の `src/gatekeeper/models.py`（`ReleaseRecord` 等）に実装済み**。W1ではこれを再利用し、**ランタイム判定の出力**と**永続化**のスキーマを足す。W2の合成データ量産・自己改善がそのまま乗る。
+要件 §9.1 の `release_record` スキーマは **既存の `src/pmz/models.py`（`ReleaseRecord` 等）に実装済み**。W1ではこれを再利用し、**ランタイム判定の出力**と**永続化**のスキーマを足す。W2の合成データ量産・自己改善がそのまま乗る。
 
 > **命名の整理（既存との衝突回避）**: 既存 `models.Verdict` は **`Go/No-Go` の2値**で、合成データの
 > 「あるべき判定」`correct_verdict`＝指標（混同行列・要件 §6.1）の正解ラベル用。
@@ -301,10 +301,10 @@ gate_decision:
 | `GET` | `/healthz` | Cloud Run ヘルスチェック。 |
 | `GET` | `/v1/verdicts/{id}` | 判定の参照（デモ/監査）。 |
 
-`gatekeeper-cli`（従経路）:
+`pmz-cli`（従経路）:
 ```
-gatekeeper judge --pr 42 --repo owner/name          # 実PRを再判定
-gatekeeper judge --record data/synthetic/r07.yaml   # 合成データを判定（回帰デモ）
+pmz judge --pr 42 --repo owner/name          # 実PRを再判定
+pmz judge --record data/synthetic/r07.yaml   # 合成データを判定（回帰デモ）
 ```
 
 ---
@@ -328,11 +328,11 @@ gatekeeper judge --record data/synthetic/r07.yaml   # 合成データを判定�
 ## 9. CI/CD・IaC（W1で「まわす」を最小実装）
 
 - **`.github/workflows/deploy.yml`**: main更新で `app/` をビルド→Cloud Runへデプロイ（WIF推奨／鍵レス）。
-- **`.github/workflows/gate.yml`**: PRで `gatekeeper-cli` を回し、**自分自身のPRをGateKeeperで判定**（ドッグフーディング）。
+- **`.github/workflows/gate.yml`**: PRで `pmz-cli` を回し、**自分自身のPRをpmzで判定**（ドッグフーディング）。
 - **`infra/terraform/`**: Cloud Run / Firestore / Service Account / 必要IAM の雛形（W1はapplyできる最小集合）。
 - テスト: `pytest`（ハードガード単体＋judgeスモーク）をPRで実行。
 
-🎯 **自己言及的整合**: GateKeeper自身のCI/CDで GateKeeper が PR を判定する＝「**自分自身がDevOpsサイクルで改善される**」（要件 §5）。これは「まわす」の最強デモ。山田CEO「プロトタイプは作れるが実運用まで持っていけない」への直接回答。
+🎯 **自己言及的整合**: pmz自身のCI/CDで pmz が PR を判定する＝「**自分自身がDevOpsサイクルで改善される**」（要件 §5）。これは「まわす」の最強デモ。山田CEO「プロトタイプは作れるが実運用まで持っていけない」への直接回答。
 
 ---
 
@@ -340,7 +340,7 @@ gatekeeper judge --record data/synthetic/r07.yaml   # 合成データを判定�
 
 | 日 | タスク | 完了条件 |
 |----|--------|----------|
-| Day1 | GCP/Gemini/GitHub App の各設定・`💬要確認`解消、`src/gatekeeper/` 配下のパッケージ枠(§4)・`core/decision.py`(GateDecision) | アプリ枠とSecretが揃う |
+| Day1 | GCP/Gemini/GitHub App の各設定・`💬要確認`解消、`src/pmz/` 配下のパッケージ枠(§4)・`core/decision.py`(GateDecision) | アプリ枠とSecretが揃う |
 | Day2 | `core/judge.py`・`signals.py`・`hard_guard.py`（既存`RiskFlag`再利用）＋単体テスト | `judge(signals)` がローカルで動く・ハードガードのテスト緑 |
 | Day3 | ADK Orchestrator＋`pm_req`/`code_risk` ツール、`prompts/pm_req.v1.md` | 合成1件で `GateDecision`（証拠引用つき）が出る |
 | Day4 | GitHub App Webhook受信・署名検証・冪等・Check Run作成/更新 | 実PRで Check が in_progress→completed |

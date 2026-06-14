@@ -3,7 +3,7 @@
 import pytest
 from pydantic import ValidationError
 
-from gatekeeper.models import (
+from pmz.models import (
     Act,
     Archetype,
     ReleaseRecord,
