@@ -1,7 +1,7 @@
 # Claude Code ハーネス（AI駆動開発の足場）
 
 このディレクトリは、本リポジトリで **Claude Code による AI 駆動開発を効果的に回す** ための
-ハーネス（足場）です。要件定義（`release-gatekeeper-agent-requirements.md`）で確定した MVP を、
+ハーネス（足場）です。要件定義（`docs/requirements.md`）で確定した MVP を、
 仕様駆動・要件トレーサブルに実装していくことを狙います。
 
 ## 構成

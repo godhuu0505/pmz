@@ -1,7 +1,7 @@
 # GateKeeper — プロジェクトメモリ（Claude Code 用）
 
 > このファイルは全セッションの冒頭で読み込まれる。簡潔・具体に保つ。
-> 仕様の正本は `release-gatekeeper-agent-requirements.md`。迷ったらそちらを参照。
+> 仕様の正本は `docs/requirements.md`。迷ったらそちらを参照。
 
 ## 1. これは何か（一行）
 
@@ -38,14 +38,16 @@ uv run ruff format . # フォーマット
 ```
 src/gatekeeper/         アプリ本体（MVPは models.py = 合成リリース履歴スキーマ）
 tests/                  pytest テスト
-release-gatekeeper-agent-requirements.md   要件定義書（正本）
+docs/                   計画ドキュメント
+  requirements.md       要件定義書（正本）
+  hackathon/            審査基準の分析・戦略
 grill-me-sessions/      要件ヒアリングの決定ログ（grill-me スキルの成果物）
 .claude/                Claude Code ハーネス（settings / hooks / agents / commands）
   README.md             ハーネスの設計意図・適用したベストプラクティス
 ```
 
-主要ドキュメント: 要件 → @release-gatekeeper-agent-requirements.md ／
-審査基準の分析 → `hackathon-2026-judges-analysis.md` ／ ハーネス解説 → `.claude/README.md`。
+主要ドキュメント: 要件 → @docs/requirements.md ／
+審査基準の分析 → `docs/hackathon/judges-analysis.md` ／ ハーネス解説 → `.claude/README.md`。
 
 ## 5. 設計インバリアント（実装で絶対に崩さない）
 

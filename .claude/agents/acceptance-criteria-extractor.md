@@ -1,6 +1,6 @@
 ---
 name: acceptance-criteria-extractor
-description: 散文の要件ドキュメント（release-gatekeeper-agent-requirements.md や grill セッション）から、機械チェック可能な構造化「受け入れ基準」のドラフトを抽出する。ある要件IDの正本（canonical acceptance criteria）を起こすとき、または PR を照合する基準が要るときに使う。出力はあくまで人間確定前のドラフトであり、自分の出力を正本として扱わない。
+description: 散文の要件ドキュメント（docs/requirements.md や grill セッション）から、機械チェック可能な構造化「受け入れ基準」のドラフトを抽出する。ある要件IDの正本（canonical acceptance criteria）を起こすとき、または PR を照合する基準が要るときに使う。出力はあくまで人間確定前のドラフトであり、自分の出力を正本として扱わない。
 tools: Read, Grep, Glob, Write
 model: sonnet
 ---
