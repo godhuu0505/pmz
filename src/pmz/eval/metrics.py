@@ -14,7 +14,7 @@ from __future__ import annotations
 from collections.abc import Iterable
 from dataclasses import dataclass
 
-from gatekeeper.models import Verdict
+from pmz.models import Verdict
 
 # 誤承認（FP）を主役にしつつ誤ブロック（FN）も罰する重み（precision 寄り・§6.1）。
 DEFAULT_BETA = 0.5

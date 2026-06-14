@@ -12,7 +12,7 @@ from __future__ import annotations
 
 from collections.abc import Iterable
 
-from gatekeeper.models import RiskFlag
+from pmz.models import RiskFlag
 
 # 現状すべての RiskFlag がハードガード対象（db_migration / auth / payment・§7 #5）。
 # 将来リスク領域を細分化しても、ここだけ変えれば自律承認禁止の範囲が決まる。

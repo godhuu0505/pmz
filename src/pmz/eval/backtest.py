@@ -17,15 +17,15 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
-from gatekeeper.core.decision import GateDecision
-from gatekeeper.core.judge import judge_record
-from gatekeeper.data import load_synthetic_releases
-from gatekeeper.eval.metrics import ConfusionMatrix, confusion_matrix
-from gatekeeper.learning.memory import CaseMemory, MisjudgedCase
-from gatekeeper.learning.retrospective import is_confirmed_bad, learn_rule_from
-from gatekeeper.learning.rulebook import Rulebook
-from gatekeeper.models import Act, ReleaseRecord, Verdict
-from gatekeeper.signals import CriterionResult, CriterionStatus, RequirementAssessment
+from pmz.core.decision import GateDecision
+from pmz.core.judge import judge_record
+from pmz.data import load_synthetic_releases
+from pmz.eval.metrics import ConfusionMatrix, confusion_matrix
+from pmz.learning.memory import CaseMemory, MisjudgedCase
+from pmz.learning.retrospective import is_confirmed_bad, learn_rule_from
+from pmz.learning.rulebook import Rulebook
+from pmz.models import Act, ReleaseRecord, Verdict
+from pmz.signals import CriterionResult, CriterionStatus, RequirementAssessment
 
 # 申告基準を信じる確信度（trap がすり抜ける＝ゲートが PR を信用している状況の再現）。
 _BELIEVED_CONFIDENCE = 0.9
@@ -153,9 +153,9 @@ def _fmt_cm(label: str, cm: ConfusionMatrix) -> str:
 
 
 def main() -> None:
-    """`python -m gatekeeper.eval.backtest` で before/after を表示する。"""
+    """`python -m pmz.eval.backtest` で before/after を表示する。"""
     result = run_self_improvement()
-    print("=== GateKeeper 自己改善バックテスト（合成データ §9.1）===")
+    print("=== pmz 自己改善バックテスト（合成データ §9.1）===")
     print(_fmt_cm("before（学習前）", result.before))
     print(_fmt_cm("after （学習後）", result.after))
     print(_fmt_cm("online（時系列）", result.online))

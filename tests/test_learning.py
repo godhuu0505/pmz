@@ -4,9 +4,9 @@ from __future__ import annotations
 
 from datetime import datetime
 
-from gatekeeper.learning.retrospective import is_confirmed_bad, learn_rule_from
-from gatekeeper.learning.rulebook import LearnedRule, RuleAction, Rulebook
-from gatekeeper.models import (
+from pmz.learning.retrospective import is_confirmed_bad, learn_rule_from
+from pmz.learning.rulebook import LearnedRule, RuleAction, Rulebook
+from pmz.models import (
     Arc,
     Archetype,
     CISignal,
@@ -21,7 +21,7 @@ from gatekeeper.models import (
     RequirementValue,
     Verdict,
 )
-from gatekeeper.signals import GateSignals
+from pmz.signals import GateSignals
 
 
 def _record(

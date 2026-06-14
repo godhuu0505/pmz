@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-from gatekeeper.eval.metrics import confusion_matrix
-from gatekeeper.models import Verdict
+from pmz.eval.metrics import confusion_matrix
+from pmz.models import Verdict
 
 GO = Verdict.GO
 NO = Verdict.NO_GO

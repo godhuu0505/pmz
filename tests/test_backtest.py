@@ -5,9 +5,9 @@
 
 from __future__ import annotations
 
-from gatekeeper.data import load_synthetic_releases
-from gatekeeper.eval.backtest import run_self_improvement
-from gatekeeper.models import Act, Verdict
+from pmz.data import load_synthetic_releases
+from pmz.eval.backtest import run_self_improvement
+from pmz.models import Act, Verdict
 
 
 def test_synthetic_dataset_has_24_records() -> None:

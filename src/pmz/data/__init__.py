@@ -11,7 +11,7 @@ import json
 from functools import lru_cache
 from pathlib import Path
 
-from gatekeeper.models import ReleaseRecord
+from pmz.models import ReleaseRecord
 
 _DATA_FILE = Path(__file__).with_name("synthetic_releases.json")
 

@@ -1,9 +1,9 @@
 """条件付き自律ルール版判定の単体テスト（要件 §3.4 / §7 #5）。"""
 
-from gatekeeper.core.decision import AutonomyLevel
-from gatekeeper.core.judge import judge
-from gatekeeper.models import CISignal, CodeSignal, RiskFlag, Verdict
-from gatekeeper.signals import (
+from pmz.core.decision import AutonomyLevel
+from pmz.core.judge import judge
+from pmz.models import CISignal, CodeSignal, RiskFlag, Verdict
+from pmz.signals import (
     CriterionResult,
     CriterionStatus,
     GateSignals,

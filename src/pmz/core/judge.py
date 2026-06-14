@@ -17,12 +17,12 @@ W1 死守ラインの土台。**まず LLM なしの決定論ルールでグリ�
 
 from __future__ import annotations
 
-from gatekeeper.core.decision import AutonomyLevel, GateDecision
-from gatekeeper.core.hard_guard import hard_guarded_flags
-from gatekeeper.learning.memory import CaseMemory
-from gatekeeper.learning.rulebook import RuleAction, Rulebook
-from gatekeeper.models import ReleaseRecord, Verdict
-from gatekeeper.signals import GateSignals, RequirementAssessment, build_signals
+from pmz.core.decision import AutonomyLevel, GateDecision
+from pmz.core.hard_guard import hard_guarded_flags
+from pmz.learning.memory import CaseMemory
+from pmz.learning.rulebook import RuleAction, Rulebook
+from pmz.models import ReleaseRecord, Verdict
+from pmz.signals import GateSignals, RequirementAssessment, build_signals
 
 # 自律承認に要する確信度の下限 T（§7 #5）。自己改善ループ(C)の評価で継続調整する対象（§3.4）。
 CONFIDENCE_THRESHOLD = 0.8

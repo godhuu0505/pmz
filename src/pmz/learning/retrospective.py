@@ -13,8 +13,8 @@
 
 from __future__ import annotations
 
-from gatekeeper.learning.rulebook import LearnedRule, RuleAction
-from gatekeeper.models import Archetype, ReleaseRecord
+from pmz.learning.rulebook import LearnedRule, RuleAction
+from pmz.models import Archetype, ReleaseRecord
 
 # db_migration 型の危険ファイルを見分けるパス標識（決定論）。
 _MIGRATION_MARKERS = ("migration", "migrations")

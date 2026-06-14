@@ -1,4 +1,4 @@
-# GateKeeper — プロジェクトメモリ（Claude Code 用）
+# pmz — プロジェクトメモリ（Claude Code 用）
 
 > このファイルは全セッションの冒頭で読み込まれる。簡潔・具体に保つ。
 > 仕様の正本は `docs/requirements.md`。迷ったらそちらを参照。
@@ -36,7 +36,7 @@ uv run ruff format . # フォーマット
 ## 4. リポジトリ構成
 
 ```
-src/gatekeeper/         アプリ本体（MVPは models.py = 合成リリース履歴スキーマ）
+src/pmz/                アプリ本体（MVPは models.py = 合成リリース履歴スキーマ）
 tests/                  pytest テスト
 docs/                   計画ドキュメント
   requirements.md       要件定義書（正本）
@@ -81,4 +81,5 @@ grill-me-sessions/      要件ヒアリングの決定ログ（grill-me スキ�
 - 日本語コメント可（要件と用語を一致させるため推奨）。識別子は英語。
 - pydantic v2 でドメインモデルを表現。enum は `StrEnum`。型注釈を付ける（ruff `UP`/`B` 有効）。
 - 要件用語はコード中でも一貫: `Verdict(Go/No-Go)`, `RiskFlag`, `incident_axis` / `requirement_axis` など。
-- 製品名は仮称 **`GateKeeper`** を単一トークンで統一（後から一括置換できるように）。
+- 製品名は **`pmz`**（全小文字）を単一トークンで統一。由来＝PM観点 × Z軸（自己改善）／詳細は要件 §1.1。
+  一般名詞「ゲートキーパー（門番）」は役割説明としては可。旧仮称 `GateKeeper` は使わない。

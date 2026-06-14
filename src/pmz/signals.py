@@ -17,7 +17,7 @@ from enum import StrEnum
 
 from pydantic import BaseModel, Field
 
-from gatekeeper.models import CISignal, CodeSignal, ReleaseRecord, RequirementSignal, RiskFlag
+from pmz.models import CISignal, CodeSignal, ReleaseRecord, RequirementSignal, RiskFlag
 
 
 class CriterionStatus(StrEnum):

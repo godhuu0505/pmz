@@ -13,8 +13,8 @@ from __future__ import annotations
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from gatekeeper.models import Archetype, Verdict
-from gatekeeper.signals import GateSignals
+from pmz.models import Archetype, Verdict
+from pmz.signals import GateSignals
 
 
 class MisjudgedCase(BaseModel):

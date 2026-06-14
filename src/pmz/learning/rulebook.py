@@ -16,8 +16,8 @@ from fnmatch import fnmatch
 
 from pydantic import BaseModel, Field
 
-from gatekeeper.models import Archetype
-from gatekeeper.signals import GateSignals
+from pmz.models import Archetype
+from pmz.signals import GateSignals
 
 
 class RuleAction(StrEnum):

@@ -1,11 +1,11 @@
 """決定論的ハードガードの単体テスト（要件 §7 #5 / 設計インバリアント #3）。"""
 
-from gatekeeper.core.hard_guard import (
+from pmz.core.hard_guard import (
     HARD_GUARDED_FLAGS,
     hard_guarded_flags,
     is_hard_guarded,
 )
-from gatekeeper.models import RiskFlag
+from pmz.models import RiskFlag
 
 
 def test_all_risk_flags_are_hard_guarded() -> None:
