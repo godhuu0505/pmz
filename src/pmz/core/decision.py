@@ -55,3 +55,14 @@ class GateDecision(BaseModel):
     def needs_human(self) -> bool:
         """人間の承認（Human-in-the-loop）が必要か（§3.4 中リスク / fail-to-human）。"""
         return self.autonomy is AutonomyLevel.HUMAN_REVIEW
+
+    @property
+    def effective_verdict(self) -> Verdict:
+        """自律的な実効判定（混同行列・誤承認率の集計に使う・§6）。
+
+        自律的に「承認した（通した）」と言えるのは **AUTO_APPROVE のときだけ**。
+        HUMAN_REVIEW は棄権して人間に委ねる＝自律承認していない（§3.2.1 棄権を許す）ため、
+        誤承認（FP）に数えず No-Go 側に寄せる。``verdict`` をそのまま使うと「Go と推奨したが
+        人間判断に回した」ケースを誤承認と取り違えるため、実効判定で集計する。
+        """
+        return Verdict.GO if self.autonomy is AutonomyLevel.AUTO_APPROVE else Verdict.NO_GO

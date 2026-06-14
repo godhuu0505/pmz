@@ -20,7 +20,25 @@ DevOps × AI Agent Hackathon 2026: AI エージェントを「つくる、まわ
 ### MVP スケルトン
 
 - `src/pmz/models.py` — 合成リリース履歴のデータモデル（要件 §9.1）。
+- `src/pmz/signals.py` — 客観シグナルの構造的隔離（§5 #1）。
+- `src/pmz/core/` — 条件付き自律の判定コア（`judge` / `hard_guard` / `decision`・§3.4 / §7 #5）。
 - `tests/` — pytest。lint は ruff。`uv sync` → `uv run pytest -q` で検証。
+
+### W2: 自己改善ループ（作品の心臓・§3.3.1 / §6.1 / §9.1）
+
+「**見逃す → 振り返りで学習 → 同型を検知**」を合成データ（~24件）で再現します。
+
+- `src/pmz/data/synthetic_releases.json` — trap→learn→catch のアーク（24件・§9.1）。
+- `src/pmz/learning/` — ルール自動進化（`rulebook`）・記憶/Few-shot（`memory`）・
+  振り返り（`retrospective`）。学習の正解ラベルは **客観イベントからのみ** 導出（インバリアント #6）。
+- `src/pmz/eval/` — 混同行列・F-beta（`metrics`）と学習前後のバックテスト（`backtest`）。
+
+デモ（学習前後の精度比較）:
+```
+uv run python -m pmz.eval.backtest
+```
+結果: **誤承認率 80% → 0%**、**再発アーキタイプ検知率 100%**、**誤ブロック率は 0% で不変**
+（KPI §6.1 を達成）。
 
 ## grill-me — 要件ヒアリングスキル
 
