@@ -49,7 +49,7 @@ PR作成 ──▶ ① Codex 自動レビュー ──(レビューコメント�
 
 - **Fork からのPR**: `act`（PRブランチへのpush）は同一リポジトリのブランチでのみ成功します。
   Fork PR は push 権限がないため、Claude は issue化 または返信のみに縮退します。
-- **Codex CLI のフラグ**: `--full-auto` / `--output-last-message` を使用。CLIのバージョン更新で
+- **Codex CLI のフラグ**: `--sandbox workspace-write` / `--output-last-message` を使用。CLIのバージョン更新で
   挙動が変わる場合があります（出力が空のときは stdout/ログにフォールバックします）。
 - **コスト**: `synchronize` で push のたびに Codex レビューが走ります。コストを抑えたい場合は
   `codex-review.yml` の `on.pull_request.types` から `synchronize` を外してください。

@@ -70,8 +70,9 @@ jobs:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
           set +e
-          # --full-auto: CI向け（承認プロンプトなし）。--output-last-message: 最終レビュー文だけを取り出す。
-          codex exec --full-auto --skip-git-repo-check \
+          # --sandbox workspace-write: CI向け（書き込み可・承認プロンプトなし）。exec は元々非対話。
+          # --output-last-message: 最終レビュー文だけを取り出す。
+          codex exec --sandbox workspace-write --skip-git-repo-check \
             --output-last-message codex-review.md \
             "$(cat codex-prompt.md)" > codex.stdout 2> codex.log
           status=$?
